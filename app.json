@@ -1,0 +1,27 @@
+{
+  "id": "9a2e22dc-3bca-49a4-bca5-e411493cae6e",
+  "name": "Flavor&Fragrance Package",
+  "publisher": "2H Consulting Co.,Ltd",
+  "version": "0.9.0.0",
+  "brief": "",
+  "description": "향료관련 패키지입니다.",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "17.0.0.0",
+  "application": "17.0.0.0",
+  "idRanges": [
+    {
+      "from": 55000,
+      "to": 55999
+    }
+  ],
+  "contextSensitiveHelpUrl": "https://www.notion.so/kcyang/FLAVOR-FRAGRANCE-Package-e16d4a154980479284f505ed89a717f7",
+  "showMyCode": true,
+  "runtime": "6.0",
+  "target": "OnPrem"
+}
