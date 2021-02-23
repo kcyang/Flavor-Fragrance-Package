@@ -7,9 +7,9 @@ tableextension 55000 "Sales & Receivable Setup Ext" extends "Sales & Receivables
     {
         field(55000; "Sample Request Nos"; Code[20])
         {
-            Caption = 'Sample Request Nos';
+            CaptionML = ENU='Sample Request Nos',KOR='샘플요청 번호시리즈';
             TableRelation = "No. Series";
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
 }

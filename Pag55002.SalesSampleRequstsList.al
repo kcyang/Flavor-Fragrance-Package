@@ -2,15 +2,16 @@
 /// 샘플 요청서 목록페이지 입니다. 
 /// 유형은, 리스트입니다.
 /// </summary>
+//TODO 번역추가.
 page 55002 "Sales Sample Requsts List"
 {
     ApplicationArea = Basic, Suite, Assembly;
-    Caption = 'Sales Sample Requests';
+    CaptionML = ENU = 'Sales Sample Requests', KOR = '샘플요청 목록';
     CardPageID = "Sales Sample Request";
     DataCaptionFields = "Sell-to Customer No.";
     Editable = false;
     PageType = List;
-    PromotedActionCategories = 'New,Process,Report,Request Approval,Order,Release,Posting,Print/Send,Navigate';
+    PromotedActionCategoriesML = ENU='New,Process,Report,Request Approval,Order,Release,Posting,Print/Send,Navigate',KOR='신규,프로세스,보고서,승인요청,주문,확정,전기,인쇄/전송,탐색';
     QueryCategory = 'Sales Sample Requests List';
     RefreshOnActivate = true;
     SourceTable = "Sales Header";
@@ -347,13 +348,13 @@ page 55002 "Sales Sample Requsts List"
         {
             group("O&rder")
             {
-                Caption = 'O&rder';
+                CaptionML = ENU = 'O&rder', KOR = '주문';
                 Image = "Order";
                 action(Dimensions)
                 {
                     AccessByPermission = TableData Dimension = R;
                     ApplicationArea = Dimensions;
-                    Caption = 'Dimensions';
+                    CaptionML = ENU = 'Dimensions', KOR = '관리항목';
                     Image = Dimensions;
                     Promoted = true;
                     PromotedCategory = Category5;
@@ -369,7 +370,7 @@ page 55002 "Sales Sample Requsts List"
                 action(Statistics)
                 {
                     ApplicationArea = Suite;
-                    Caption = 'Statistics';
+                    CaptionML = ENU = 'Statistics', KOR = '상태';
                     Image = Statistics;
                     Promoted = true;
                     PromotedCategory = Category5;
@@ -385,7 +386,7 @@ page 55002 "Sales Sample Requsts List"
                 action(Approvals)
                 {
                     ApplicationArea = Suite;
-                    Caption = 'Approvals';
+                    CaptionML = ENU = 'Approvals', KOR = '승인';
                     Image = Approvals;
                     Promoted = true;
                     PromotedCategory = Category5;
@@ -401,7 +402,7 @@ page 55002 "Sales Sample Requsts List"
                 action("Co&mments")
                 {
                     ApplicationArea = Comments;
-                    Caption = 'Co&mments';
+                    CaptionML = ENU = 'Co&mments', KOR = '주석';
                     Image = ViewComments;
                     Promoted = true;
                     PromotedCategory = Category5;
@@ -414,12 +415,12 @@ page 55002 "Sales Sample Requsts List"
             }
             group(Documents)
             {
-                Caption = 'Documents';
+                CaptionML = ENU = 'Documents', KOR = '문서';
                 Image = Documents;
                 action("S&hipments")
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'S&hipments';
+                    CaptionML = ENU = 'S&hipments', KOR = '출고';
                     Image = Shipment;
                     Promoted = true;
                     PromotedCategory = Category9;
@@ -431,7 +432,7 @@ page 55002 "Sales Sample Requsts List"
                 action(PostedSalesInvoices)
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Invoices';
+                    CaptionML = ENU = 'Invoices', KOR = '송장';
                     Image = Invoice;
                     Promoted = true;
                     PromotedCategory = Category9;
@@ -443,7 +444,7 @@ page 55002 "Sales Sample Requsts List"
                 action(PostedSalesPrepmtInvoices)
                 {
                     ApplicationArea = Prepayments;
-                    Caption = 'Prepa&yment Invoices';
+                    CaptionML = ENU = 'Prepa&yment Invoices', KOR = '선불송장';
                     Image = PrepaymentInvoice;
                     RunObject = Page "Posted Sales Invoices";
                     RunPageLink = "Prepayment Order No." = FIELD("No.");
@@ -453,7 +454,7 @@ page 55002 "Sales Sample Requsts List"
                 action("Prepayment Credi&t Memos")
                 {
                     ApplicationArea = Prepayments;
-                    Caption = 'Prepayment Credi&t Memos';
+                    CaptionML = ENU = 'Prepayment Credi&t Memos', KOR = '선불반품송장';
                     Image = PrepaymentCreditMemo;
                     RunObject = Page "Posted Sales Credit Memos";
                     RunPageLink = "Prepayment Order No." = FIELD("No.");
@@ -463,12 +464,12 @@ page 55002 "Sales Sample Requsts List"
             }
             group(Warehouse)
             {
-                Caption = 'Warehouse';
+                CaptionML = ENU = 'Warehouse', KOR = '창고';
                 Image = Warehouse;
                 action("Warehouse Shipment Lines")
                 {
                     ApplicationArea = Warehouse;
-                    Caption = 'Warehouse Shipment Lines';
+                    CaptionML = ENU = 'Warehouse Shipment Lines', KOR = '창고출고라인';
                     Image = ShipmentLines;
                     RunObject = Page "Whse. Shipment Lines";
                     RunPageLink = "Source Type" = CONST(37),
@@ -480,7 +481,7 @@ page 55002 "Sales Sample Requsts List"
                 action("In&vt. Put-away/Pick Lines")
                 {
                     ApplicationArea = Warehouse;
-                    Caption = 'In&vt. Put-away/Pick Lines';
+                    CaptionML = ENU = 'In&vt. Put-away/Pick Lines', KOR = '재고 적치/불출 라인';
                     Image = PickLines;
                     RunObject = Page "Warehouse Activity List";
                     RunPageLink = "Source Document" = CONST("Sales Order"),
@@ -489,38 +490,40 @@ page 55002 "Sales Sample Requsts List"
                     ToolTip = 'View items that are inbound or outbound on inventory put-away or inventory pick documents for the transfer order.';
                 }
             }
-            group(ActionGroupCRM)
-            {
-                Caption = 'Dynamics 365 Sales';
-                Visible = CRMIntegrationEnabled;
-                action(CRMGoToSalesOrderListInNAV)
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Sales Order List';
-                    Enabled = CRMIntegrationEnabled;
-                    Image = "Order";
-                    ToolTip = 'Open the Sales Order List - Dynamics 365 Sales page in Business Central';
-                    Visible = CRMIntegrationEnabled;
+            /*          //CRM 연동관련 불필요. //FIXME 나중에 삭제할 것.  
+                        group(ActionGroupCRM)
+                        {
+                            Caption = 'Dynamics 365 Sales';
+                            Visible = CRMIntegrationEnabled;
+                            action(CRMGoToSalesOrderListInNAV)
+                            {
+                                ApplicationArea = Basic, Suite;
+                                CaptionML = ENU='Sales Order List',KOR='판매주문목록';
+                                Enabled = CRMIntegrationEnabled;
+                                Image = "Order";
+                                ToolTip = 'Open the Sales Order List - Dynamics 365 Sales page in Business Central';
+                                Visible = CRMIntegrationEnabled;
 
-                    trigger OnAction()
-                    var
-                        CRMSalesorder: Record "CRM Salesorder";
-                    begin
-                        PAGE.Run(PAGE::"CRM Sales Order List", CRMSalesorder);
-                    end;
-                }
-            }
+                                trigger OnAction()
+                                var
+                                    CRMSalesorder: Record "CRM Salesorder";
+                                begin
+                                    PAGE.Run(PAGE::"CRM Sales Order List", CRMSalesorder);
+                                end;
+                            }
+                        }
+            */
         }
         area(processing)
         {
             group(Action12)
             {
-                Caption = 'Release';
+                CaptionML = ENU = 'Release', KOR = '확정';
                 Image = ReleaseDoc;
                 action(Release)
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Re&lease';
+                    CaptionML = ENU = 'Re&lease', KOR = '확정';
                     Image = ReleaseDoc;
                     Promoted = true;
                     PromotedCategory = Category6;
@@ -538,7 +541,7 @@ page 55002 "Sales Sample Requsts List"
                 action(Reopen)
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Re&open';
+                    CaptionML = ENU = 'Re&open', KOR = '다시열기';
                     Image = ReOpen;
                     Promoted = true;
                     PromotedCategory = Category6;
@@ -555,12 +558,12 @@ page 55002 "Sales Sample Requsts List"
             }
             group("F&unctions")
             {
-                Caption = 'F&unctions';
+                CaptionML = ENU = 'F&unctions', KOR = '기능';
                 Image = "Action";
                 action("Pla&nning")
                 {
                     ApplicationArea = Planning;
-                    Caption = 'Pla&nning';
+                    CaptionML = ENU = 'Pla&nning', KOR = '계획';
                     Image = Planning;
                     ToolTip = 'Open a tool for manual supply planning that displays all new demand along with availability information and suggestions for supply. It provides the visibility and tools needed to plan for demand from sales lines and component lines and then create different types of supply orders directly.';
 
@@ -576,7 +579,7 @@ page 55002 "Sales Sample Requsts List"
                 {
                     AccessByPermission = TableData "Order Promising Line" = R;
                     ApplicationArea = OrderPromising;
-                    Caption = 'Order &Promising';
+                    CaptionML = ENU = 'Order &Promising', KOR = '주문 예측';
                     Image = OrderPromising;
                     ToolTip = 'Calculate the shipment and delivery dates based on the item''s known and expected availability dates, and then promise the dates to the customer.';
 
@@ -593,7 +596,7 @@ page 55002 "Sales Sample Requsts List"
                 {
                     AccessByPermission = TableData "IC G/L Account" = R;
                     ApplicationArea = Intercompany;
-                    Caption = 'Send IC Sales Order Cnfmn.';
+                    CaptionML = ENU = 'Send IC Sales Order Cnfmn.', KOR = 'IC 확정 매출주문 전송';
                     Image = IntercompanyOrder;
                     ToolTip = 'Send the document to the intercompany outbox or directly to the intercompany partner if automatic transaction sending is enabled.';
 
@@ -609,7 +612,7 @@ page 55002 "Sales Sample Requsts List"
                 action("Delete Invoiced")
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Delete Invoiced Sales Orders';
+                    CaptionML = ENU = 'Delete Invoiced Sales Orders', KOR = '송장완료된 매출주문 삭제';
                     Image = Delete;
                     RunObject = Report "Delete Invoiced Sales Orders";
                     ToolTip = 'Delete orders that were not automatically deleted after completion. For example, when several sales orders were completed by a single invoice.';
@@ -617,11 +620,11 @@ page 55002 "Sales Sample Requsts List"
             }
             group("Request Approval")
             {
-                Caption = 'Request Approval';
+                CaptionML = ENU = 'Request Approval', KOR = '승인요청';
                 action(SendApprovalRequest)
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Send A&pproval Request';
+                    CaptionML = ENU = 'Send A&pproval Request', KOR = '승인요청 전송';
                     Enabled = NOT OpenApprovalEntriesExist AND CanRequestApprovalForFlow;
                     Image = SendApprovalRequest;
                     ToolTip = 'Request approval of the document.';
@@ -637,7 +640,7 @@ page 55002 "Sales Sample Requsts List"
                 action(CancelApprovalRequest)
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Cancel Approval Re&quest';
+                    CaptionML = ENU = 'Cancel Approval Re&quest', KOR = '승인요청 취소';
                     Enabled = CanCancelApprovalForRecord OR CanCancelApprovalForFlow;
                     Image = CancelApprovalRequest;
                     ToolTip = 'Cancel the approval request.';
@@ -654,13 +657,13 @@ page 55002 "Sales Sample Requsts List"
             }
             group(Action3)
             {
-                Caption = 'Warehouse';
+                CaptionML = ENU = 'Warehouse', KOR = '창고';
                 Image = Warehouse;
                 action("Create Inventor&y Put-away/Pick")
                 {
                     AccessByPermission = TableData "Posted Invt. Pick Header" = R;
                     ApplicationArea = Warehouse;
-                    Caption = 'Create Inventor&y Put-away/Pick';
+                    CaptionML = ENU = 'Create Inventor&y Put-away/Pick', KOR = '재고 불출/적재문서 생성';
                     Ellipsis = true;
                     Image = CreatePutawayPick;
                     ToolTip = 'Create an inventory put-away or inventory pick to handle items on the document according to a basic warehouse configuration that does not require warehouse receipt or shipment documents.';
@@ -677,7 +680,7 @@ page 55002 "Sales Sample Requsts List"
                 {
                     AccessByPermission = TableData "Warehouse Shipment Header" = R;
                     ApplicationArea = Warehouse;
-                    Caption = 'Create &Warehouse Shipment';
+                    CaptionML = ENU = 'Create &Warehouse Shipment', KOR = '창고출고문서 생성';
                     Image = NewShipment;
                     ToolTip = 'Create a warehouse shipment to start a pick a ship process according to an advanced warehouse configuration.';
 
@@ -694,12 +697,12 @@ page 55002 "Sales Sample Requsts List"
             }
             group("P&osting")
             {
-                Caption = 'P&osting';
+                CaptionML = ENU = 'P&osting', KOR = '전기';
                 Image = Post;
                 action(Post)
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'P&ost';
+                    CaptionML = ENU = 'P&ost', KOR = '전기';
                     Ellipsis = true;
                     Image = PostOrder;
                     Promoted = true;
@@ -728,7 +731,7 @@ page 55002 "Sales Sample Requsts List"
                 action(PostAndSend)
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Post and Send';
+                    CaptionML = ENU = 'Post and Send', KOR = '전기 및 전송';
                     Ellipsis = true;
                     Image = PostMail;
                     Promoted = true;
@@ -744,7 +747,7 @@ page 55002 "Sales Sample Requsts List"
                 action("Test Report")
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Test Report';
+                    CaptionML = ENU = 'Test Report', KOR = '테스트 보고서';
                     Ellipsis = true;
                     Image = TestReport;
                     ToolTip = 'View a test report so that you can find and correct any errors before you perform the actual posting of the journal or document.';
@@ -757,7 +760,7 @@ page 55002 "Sales Sample Requsts List"
                 action("Post &Batch")
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Post &Batch';
+                    CaptionML = ENU = 'Post &Batch', KOR = '배치 전기';
                     Ellipsis = true;
                     Image = PostBatch;
                     Promoted = true;
@@ -778,7 +781,7 @@ page 55002 "Sales Sample Requsts List"
                 action("Remove From Job Queue")
                 {
                     ApplicationArea = All;
-                    Caption = 'Remove From Job Queue';
+                    CaptionML = ENU = 'Remove From Job Queue', KOR = '잡큐에서 제거';
                     Image = RemoveLine;
                     ToolTip = 'Remove the scheduled processing of this record from the job queue.';
                     Visible = JobQueueActive;
@@ -791,7 +794,7 @@ page 55002 "Sales Sample Requsts List"
                 action("Preview Posting")
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Preview Posting';
+                    CaptionML = ENU = 'Preview Posting', KOR = '전기 미리보기';
                     Image = ViewPostedOrder;
                     Promoted = true;
                     PromotedCategory = Category7;
@@ -805,12 +808,12 @@ page 55002 "Sales Sample Requsts List"
             }
             group("&Print")
             {
-                Caption = '&Print';
+                CaptionML = ENU = '&Print', KOR = '인쇄';
                 Image = Print;
                 action("Work Order")
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Work Order';
+                    CaptionML = ENU = 'Work Order', KOR = '작업 주문';
                     Ellipsis = true;
                     Image = Print;
                     ToolTip = 'Prepare to registers actual item quantities or time used in connection with the sales order. For example, the document can be used by staff who perform any kind of processing work in connection with the sales order. It can also be exported to Excel if you need to process the sales line data further.';
@@ -823,7 +826,7 @@ page 55002 "Sales Sample Requsts List"
                 action("Pick Instruction")
                 {
                     ApplicationArea = Warehouse;
-                    Caption = 'Pick Instruction';
+                    CaptionML = ENU = 'Pick Instruction', KOR = '불출 지시서';
                     Image = Print;
                     ToolTip = 'Print a picking list that shows which items to pick and ship for the sales order. If an item is assembled to order, then the report includes rows for the assembly components that must be picked. Use this report as a pick instruction to employees in charge of picking sales items or assembly components for the sales order.';
 
@@ -835,12 +838,12 @@ page 55002 "Sales Sample Requsts List"
             }
             group("&Order Confirmation")
             {
-                Caption = '&Order Confirmation';
+                CaptionML = ENU = '&Order Confirmation', KOR = '주문 확인';
                 Image = Email;
                 action("Email Confirmation")
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Email Confirmation';
+                    CaptionML = ENU = 'Email Confirmation', KOR = '이메일로 확인';
                     Ellipsis = true;
                     Image = Email;
                     Promoted = true;
@@ -855,7 +858,7 @@ page 55002 "Sales Sample Requsts List"
                 action("Print Confirmation")
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Print Confirmation';
+                    CaptionML = ENU = 'Print Confirmation', KOR = '확인서 인쇄';
                     Ellipsis = true;
                     Image = Print;
                     Promoted = true;
@@ -871,7 +874,7 @@ page 55002 "Sales Sample Requsts List"
                 action(AttachAsPDF)
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Attach as PDF';
+                    CaptionML = ENU = 'Attach as PDF', KOR = 'PDF로 첨부';
                     Image = PrintAttachment;
                     Promoted = true;
                     PromotedCategory = Category8;
@@ -890,11 +893,11 @@ page 55002 "Sales Sample Requsts List"
             }
             group(Display)
             {
-                Caption = 'Display';
+                CaptionML = ENU = 'Display', KOR = '보기';
                 action(ReportFactBoxVisibility)
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Show/Hide Power BI Reports';
+                    CaptionML = ENU = 'Show/Hide Power BI Reports', KOR = 'Power BI 보고서 보기/숨기기';
                     Image = "Report";
                     ToolTip = 'Select if the Power BI FactBox is visible or not.';
 
@@ -911,7 +914,7 @@ page 55002 "Sales Sample Requsts List"
             action("Sales Reservation Avail.")
             {
                 ApplicationArea = Reservation;
-                Caption = 'Sales Reservation Avail.';
+                CaptionML = ENU = 'Sales Reservation Avail.', KOR = '판매 예약가능';
                 Image = "Report";
                 Promoted = true;
                 PromotedCategory = "Report";
@@ -1053,5 +1056,5 @@ page 55002 "Sales Sample Requsts List"
 
 
 
-    
+
 }

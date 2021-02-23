@@ -4,7 +4,7 @@
 page 55001 "Sales Sample Request Subform"
 {
     AutoSplitKey = true;
-    Caption = 'Lines';
+    CaptionML = ENU='Lines',KOR='라인';
     DelayedInsert = true;
     LinksAllowed = false;
     MultipleNewLines = true;
@@ -502,17 +502,17 @@ page 55001 "Sales Sample Request Subform"
         {
             group("&Line")
             {
-                Caption = '&Line';
+                CaptionML = ENU='&Line',KOR='라인';
                 Image = Line;
                 group("Item Availability by")
                 {
-                    Caption = 'Item Availability by';
+                    CaptionML = ENU='Item Availability by',KOR='품목 가용량';
                     Image = ItemAvailability;
                     Enabled = Type = Type::Item;
                     action("Event")
                     {
                         ApplicationArea = Suite;
-                        Caption = 'Event';
+                        CaptionML = ENU='Event',KOR='이벤트';
                         Image = "Event";
                         ToolTip = 'View how the actual and the projected available balance of an item will develop over time according to supply and demand events.';
 
@@ -524,7 +524,7 @@ page 55001 "Sales Sample Request Subform"
                     action(Period)
                     {
                         ApplicationArea = Suite;
-                        Caption = 'Period';
+                        CaptionML = ENU='Period',KOR='기간';
                         Image = Period;
                         ToolTip = 'View the projected quantity of the item over time according to time periods, such as day, week, or month.';
 
@@ -536,7 +536,7 @@ page 55001 "Sales Sample Request Subform"
                     action(Variant)
                     {
                         ApplicationArea = Planning;
-                        Caption = 'Variant';
+                        CaptionML = ENU='Variant',KOR='사양';
                         Image = ItemVariant;
                         ToolTip = 'View or edit the item''s variants. Instead of setting up each color of an item as a separate item, you can set up the various colors as variants of the item.';
 
@@ -549,7 +549,7 @@ page 55001 "Sales Sample Request Subform"
                     {
                         AccessByPermission = TableData Location = R;
                         ApplicationArea = Location;
-                        Caption = 'Location';
+                        CaptionML = ENU='Location',KOR='위치';
                         Image = Warehouse;
                         ToolTip = 'View the actual and projected quantity of the item per location.';
 
@@ -561,7 +561,7 @@ page 55001 "Sales Sample Request Subform"
                     action("BOM Level")
                     {
                         ApplicationArea = Suite;
-                        Caption = 'BOM Level';
+                        CaptionML = ENU='BOM Level',KOR='BOM레벨';
                         Image = BOMLevel;
                         ToolTip = 'View availability figures for items on bills of materials that show how many units of a parent item you can make based on the availability of child items.';
 
@@ -573,12 +573,12 @@ page 55001 "Sales Sample Request Subform"
                 }
                 group("Unposted Lines")
                 {
-                    Caption = 'Unposted Lines';
+                    CaptionML = ENU='Unposted Lines',KOR='미전기 라인';
                     Image = "Order";
                     action(Orders)
                     {
                         ApplicationArea = Suite;
-                        Caption = 'Orders';
+                        CaptionML = ENU='Orders',KOR='주문';
                         Image = Document;
                         ToolTip = 'View related sales orders.';
 
@@ -590,7 +590,7 @@ page 55001 "Sales Sample Request Subform"
                     action(Invoices)
                     {
                         ApplicationArea = Suite;
-                        Caption = 'Invoices';
+                        CaptionML = ENU='Invoices',KOR='송장';
                         Image = Invoice;
                         ToolTip = 'View a list of ongoing sales invoices for the order.';
 
@@ -603,7 +603,7 @@ page 55001 "Sales Sample Request Subform"
                     {
                         AccessByPermission = TableData "Return Receipt Header" = R;
                         ApplicationArea = SalesReturnOrder;
-                        Caption = 'Return Orders';
+                        CaptionML = ENU='Return Orders',KOR='반품주문';
                         Image = ReturnOrder;
                         ToolTip = 'Open the list of ongoing return orders.';
 
@@ -615,7 +615,7 @@ page 55001 "Sales Sample Request Subform"
                     action("Credit Memos")
                     {
                         ApplicationArea = Suite;
-                        Caption = 'Credit Memos';
+                        CaptionML = ENU='Credit Memos',KOR='반품송장';
                         Image = CreditMemo;
                         ToolTip = 'View a list of ongoing credit memos for the order.';
 
@@ -627,12 +627,12 @@ page 55001 "Sales Sample Request Subform"
                 }
                 group("Posted Lines")
                 {
-                    Caption = 'Posted Lines';
+                    CaptionML = ENU='Posted Lines',KOR='전기된 라인';
                     Image = Post;
                     action(Shipments)
                     {
                         ApplicationArea = Suite;
-                        Caption = 'Shipments';
+                        CaptionML = ENU='Shipments',KOR='출고';
                         Image = Shipment;
                         ToolTip = 'View a list of ongoing sales shipments for the order.';
 
@@ -644,7 +644,7 @@ page 55001 "Sales Sample Request Subform"
                     action(Action1901092104)
                     {
                         ApplicationArea = Suite;
-                        Caption = 'Invoices';
+                        CaptionML = ENU='Invoices',KOR='송장';
                         Image = Invoice;
                         ToolTip = 'View a list of ongoing sales invoices for the order.';
 
@@ -657,7 +657,7 @@ page 55001 "Sales Sample Request Subform"
                     {
                         AccessByPermission = TableData "Return Receipt Header" = R;
                         ApplicationArea = Suite;
-                        Caption = 'Return Receipts';
+                        CaptionML = ENU='Return Receipts',KOR='반품입고';
                         Image = ReturnReceipt;
                         ToolTip = 'View a list of posted return receipts for the order.';
 
@@ -669,7 +669,7 @@ page 55001 "Sales Sample Request Subform"
                     action(Action1901033504)
                     {
                         ApplicationArea = Suite;
-                        Caption = 'Credit Memos';
+                        CaptionML = ENU='Credit Memos',KOR='반품송장';
                         Image = CreditMemo;
                         ToolTip = 'View a list of ongoing credit memos for the order.';
 
@@ -683,7 +683,7 @@ page 55001 "Sales Sample Request Subform"
                 {
                     AccessByPermission = TableData Dimension = R;
                     ApplicationArea = Dimensions;
-                    Caption = 'Dimensions';
+                    CaptionML = ENU='Dimensions',KOR='관리항목';
                     Image = Dimensions;
                     ShortCutKey = 'Alt+D';
                     ToolTip = 'View or edit dimensions, such as area, project, or department, that you can assign to sales and purchase documents to distribute costs and analyze transaction history.';
@@ -696,7 +696,7 @@ page 55001 "Sales Sample Request Subform"
                 action(DocAttach)
                 {
                     ApplicationArea = All;
-                    Caption = 'Attachments';
+                    CaptionML = ENU='Attachments',KOR='첨부';
                     Image = Attach;
                     ToolTip = 'Add a file as an attachment. You can attach images as well as documents.';
 
@@ -713,7 +713,7 @@ page 55001 "Sales Sample Request Subform"
                 action("Co&mments")
                 {
                     ApplicationArea = Comments;
-                    Caption = 'Co&mments';
+                    CaptionML = ENU='Co&mments',KOR='주석';
                     Image = ViewComments;
                     ToolTip = 'View or add comments for the record.';
 
@@ -724,13 +724,13 @@ page 55001 "Sales Sample Request Subform"
                 }
                 group("Assemble to Order")
                 {
-                    Caption = 'Assemble to Order';
+                    CaptionML = ENU='Assemble to Order',KOR='조립주문';
                     Image = AssemblyBOM;
                     action("Assemble-to-Order Lines")
                     {
                         AccessByPermission = TableData "BOM Component" = R;
                         ApplicationArea = Assembly;
-                        Caption = 'Assemble-to-Order Lines';
+                        CaptionML = ENU='Assemble-to-Order Lines',KOR='조립주문 라인';
                         ToolTip = 'View any linked assembly order lines if the documents represents an assemble-to-order sale.';
 
                         trigger OnAction()
@@ -742,9 +742,9 @@ page 55001 "Sales Sample Request Subform"
                     {
                         AccessByPermission = TableData "BOM Component" = R;
                         ApplicationArea = Assembly;
-                        Caption = 'Roll Up &Price';
+                        CaptionML = ENU='Roll Up &Price',KOR='단가 업데이트';
                         Ellipsis = true;
-                        ToolTip = 'Update the unit price of the assembly item according to any changes that you have made to the assembly components.';
+                        ToolTip = '조립 부품 변경 사항에 따라 조립품 단가를 업데이트합니다.';
 
                         trigger OnAction()
                         begin
@@ -755,7 +755,7 @@ page 55001 "Sales Sample Request Subform"
                     {
                         AccessByPermission = TableData "BOM Component" = R;
                         ApplicationArea = Assembly;
-                        Caption = 'Roll Up &Cost';
+                        CaptionML = ENU='Roll Up &Cost',KOR='단위원가 업데이트';
                         Ellipsis = true;
                         ToolTip = 'Update the unit cost of the assembly item according to any changes that you have made to the assembly components.';
 
@@ -768,7 +768,7 @@ page 55001 "Sales Sample Request Subform"
                 action(DocumentLineTracking)
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Document &Line Tracking';
+                    CaptionML = ENU='Document &Line Tracking',KOR='문서라인 추적';
                     Image = Navigate;
                     ToolTip = 'View related open, posted, or archived documents or document lines.';
 
@@ -780,13 +780,13 @@ page 55001 "Sales Sample Request Subform"
             }
             group("F&unctions")
             {
-                Caption = 'F&unctions';
+                CaptionML = ENU='F&unctions',KOR='기능';
                 Image = "Action";
                 action("Get &Price")
                 {
                     //AccessByPermission = TableData "Sales Price" = R;
                     ApplicationArea = Suite;
-                    Caption = 'Get &Price';
+                    CaptionML = ENU='Get &Price',KOR='단가 불러오기';
                     Ellipsis = true;
                     Image = Price;
                     Visible = not ExtendedPriceEnabled;
@@ -801,7 +801,7 @@ page 55001 "Sales Sample Request Subform"
                 {
                     //AccessByPermission = TableData "Sales Line Discount" = R;
                     ApplicationArea = Suite;
-                    Caption = 'Get Li&ne Discount';
+                    CaptionML = ENU='Get Li&ne Discount',KOR='할인가 불러오기';
                     Ellipsis = true;
                     Image = LineDiscount;
                     Visible = not ExtendedPriceEnabled;
@@ -815,7 +815,7 @@ page 55001 "Sales Sample Request Subform"
                 action(GetPrice)
                 {
                     ApplicationArea = Suite;
-                    Caption = 'Get &Price';
+                    CaptionML = ENU='Get &Price',KOR='단가 불러오기';
                     Ellipsis = true;
                     Image = Price;
                     Visible = ExtendedPriceEnabled;
@@ -829,7 +829,7 @@ page 55001 "Sales Sample Request Subform"
                 action(GetLineDiscount)
                 {
                     ApplicationArea = Suite;
-                    Caption = 'Get Li&ne Discount';
+                    CaptionML = ENU='Get Li&ne Discount',KOR='할인가 불러오기';
                     Ellipsis = true;
                     Image = LineDiscount;
                     Visible = ExtendedPriceEnabled;
@@ -844,7 +844,7 @@ page 55001 "Sales Sample Request Subform"
                 {
                     AccessByPermission = TableData "BOM Component" = R;
                     ApplicationArea = Suite;
-                    Caption = 'E&xplode BOM';
+                    CaptionML = ENU='E&xplode BOM',KOR='BOM확장';
                     Image = ExplodeBOM;
                     Enabled = Type = Type::Item;
                     ToolTip = 'Add a line for each component on the bill of materials for the selected item. For example, this is useful for selling the parent item as a kit. CAUTION: The line for the parent item will be deleted and only its description will display. To undo this action, delete the component lines and add a line for the parent item again. This action is available only for lines that contain an item.';
@@ -858,7 +858,7 @@ page 55001 "Sales Sample Request Subform"
                 {
                     AccessByPermission = TableData "Extended Text Header" = R;
                     ApplicationArea = Suite;
-                    Caption = 'Insert &Ext. Texts';
+                    CaptionML = ENU='Insert &Ext. Texts',KOR='확장테스트 넣기';
                     Image = Text;
                     ToolTip = 'Insert the extended item description that is set up for the item that is being processed on the line.';
 
@@ -936,7 +936,7 @@ page 55001 "Sales Sample Request Subform"
         InvoiceDiscountAmount: Decimal;
         InvoiceDiscountPct: Decimal;
         AmountWithDiscountAllowed: Decimal;
-        UpdateInvDiscountQst: Label 'One or more lines have been invoiced. The discount distributed to invoiced lines will not be taken into account.\\Do you want to update the invoice discount?';
+        UpdateInvDiscountQst: Label '하나 이상의 라인이 송장처리되었습니다. 송장 처리된 라인에 이미 분배된 할인은 고려되지 않습니다.\\송장 할인을 업데이트하시겠습니까?';
         ExtendedPriceEnabled: Boolean;
 
     protected var
