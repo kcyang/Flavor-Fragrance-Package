@@ -4,9 +4,9 @@
 page 55000 "Sales Sample Request"
 {
 
-    CaptionML = ENU='Sales Sample Request',KOR='샘플 요청';
+    CaptionML = ENU = 'Sales Sample Request', KOR = '샘플 요청';
     PageType = Document;
-    PromotedActionCategoriesML = ENU='New,Process,Report,Approve,Request Approval,Print/Send,Release,Order',KOR='신규,프로세스,보고서,승인,승인요청,인쇄/전송,확정,주문';
+    PromotedActionCategoriesML = ENU = 'New,Process,Report,Approve,Request Approval,Print/Send,Release,Order', KOR = '신규,프로세스,보고서,승인,승인요청,인쇄/전송,확정,주문';
     RefreshOnActivate = true;
     SourceTable = "Sales Header";
     SourceTableView = WHERE("Document Type" = FILTER("Sample Request"));
@@ -34,7 +34,7 @@ page 55000 "Sales Sample Request"
                 field("Sell-to Customer No."; "Sell-to Customer No.")
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Customer No.',KOR='매출처 번호';
+                    CaptionML = ENU = 'Customer No.', KOR = '매출처 번호';
                     Importance = Additional;
                     NotBlank = true;
                     ToolTip = 'Specifies the number of the customer who will receive the products and be billed by default.';
@@ -48,7 +48,7 @@ page 55000 "Sales Sample Request"
                 field("Sell-to Customer Name"; "Sell-to Customer Name")
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Customer Name',KOR='매출처 이름';
+                    CaptionML = ENU = 'Customer Name', KOR = '매출처 이름';
                     Importance = Promoted;
                     ToolTip = 'Specifies the name of the customer who will receive the products and be billed by default.';
 
@@ -67,7 +67,7 @@ page 55000 "Sales Sample Request"
                 }
                 group("Sell-to")
                 {
-                    CaptionML = ENU='Sell-to',KOR='판매처';
+                    CaptionML = ENU = 'Sell-to', KOR = '판매처';
                     field("Sell-to Address"; "Sell-to Address")
                     {
                         ApplicationArea = Suite;
@@ -117,7 +117,7 @@ page 55000 "Sales Sample Request"
                     field(SellToPhoneNo; SellToContact."Phone No.")
                     {
                         ApplicationArea = Basic, Suite;
-                        CaptionML = ENU='Phone No.',KOR='판매처 전화번호';
+                        CaptionML = ENU = 'Phone No.', KOR = '판매처 전화번호';
                         Importance = Additional;
                         Editable = false;
                         ExtendedDatatype = PhoneNo;
@@ -126,7 +126,7 @@ page 55000 "Sales Sample Request"
                     field(SellToMobilePhoneNo; SellToContact."Mobile Phone No.")
                     {
                         ApplicationArea = Basic, Suite;
-                        CaptionML = ENU='Mobile Phone No.',KOR='판매처 담당휴대전화';
+                        CaptionML = ENU = 'Mobile Phone No.', KOR = '판매처 담당휴대전화';
                         Importance = Additional;
                         Editable = false;
                         ExtendedDatatype = PhoneNo;
@@ -135,7 +135,7 @@ page 55000 "Sales Sample Request"
                     field(SellToEmail; SellToContact."E-Mail")
                     {
                         ApplicationArea = Basic, Suite;
-                        CaptionML = ENU='Email',KOR='이메일';
+                        CaptionML = ENU = 'Email', KOR = '이메일';
                         Importance = Additional;
                         Editable = false;
                         ExtendedDatatype = EMail;
@@ -224,7 +224,7 @@ page 55000 "Sales Sample Request"
             }
             group("Invoice Details")
             {
-                CaptionML = ENU='Invoice Details',KOR='송장 내용';
+                CaptionML = ENU = 'Invoice Details', KOR = '송장 내용';
                 field("Currency Code"; "Currency Code")
                 {
                     ApplicationArea = Suite;
@@ -335,7 +335,7 @@ page 55000 "Sales Sample Request"
             }
             group("Shipping and Billing")
             {
-                CaptionML = ENU='Shipping and Billing',KOR='배송 및 청구';
+                CaptionML = ENU = 'Shipping and Billing', KOR = '배송 및 청구';
                 Enabled = "Sell-to Customer No." <> '';
                 group(Control25)
                 {
@@ -346,7 +346,7 @@ page 55000 "Sales Sample Request"
                         field(ShippingOptions; ShipToOptions)
                         {
                             ApplicationArea = Basic, Suite;
-                            CaptionML = ENU='Ship-to',KOR='출고지';
+                            CaptionML = ENU = 'Ship-to', KOR = '출고지';
                             OptionCaption = 'Default (Sell-to Address),Alternate Shipping Address,Custom Address';
                             ToolTip = 'Specifies the address that the products on the sales document are shipped to. Default (Sell-to Address): The same as the customer''s sell-to address. Alternate Ship-to Address: One of the customer''s alternate ship-to addresses. Custom Address: Any ship-to address that you specify in the fields below.';
 
@@ -389,7 +389,7 @@ page 55000 "Sales Sample Request"
                             field("Ship-to Code"; "Ship-to Code")
                             {
                                 ApplicationArea = Suite;
-                                CaptionML = ENU='Code',KOR='출고지 코드';
+                                CaptionML = ENU = 'Code', KOR = '출고지 코드';
                                 Editable = ShipToOptions = ShipToOptions::"Alternate Shipping Address";
                                 Importance = Promoted;
                                 ToolTip = 'Specifies the code for another shipment address than the customer''s own address, which is entered by default.';
@@ -403,14 +403,14 @@ page 55000 "Sales Sample Request"
                             field("Ship-to Name"; "Ship-to Name")
                             {
                                 ApplicationArea = Suite;
-                                CaptionML = ENU='Name',KOR='출고지이름';
+                                CaptionML = ENU = 'Name', KOR = '출고지이름';
                                 Editable = ShipToOptions = ShipToOptions::"Custom Address";
                                 ToolTip = 'Specifies the name that products on the sales document will be shipped to.';
                             }
                             field("Ship-to Address"; "Ship-to Address")
                             {
                                 ApplicationArea = Suite;
-                                CaptionML = ENU='Address',KOR='출고지주소';
+                                CaptionML = ENU = 'Address', KOR = '출고지주소';
                                 Editable = ShipToOptions = ShipToOptions::"Custom Address";
                                 QuickEntry = false;
                                 ToolTip = 'Specifies the address that products on the sales document will be shipped to. By default, the field is filled with the value in the Address field on the customer card or with the value in the Address field in the Ship-to Address window.';
@@ -418,7 +418,7 @@ page 55000 "Sales Sample Request"
                             field("Ship-to Address 2"; "Ship-to Address 2")
                             {
                                 ApplicationArea = Suite;
-                                CaptionML = ENU='Address 2',KOR='출고지주소2';
+                                CaptionML = ENU = 'Address 2', KOR = '출고지주소2';
                                 Editable = ShipToOptions = ShipToOptions::"Custom Address";
                                 QuickEntry = false;
                                 ToolTip = 'Specifies an additional part of the shipping address.';
@@ -426,7 +426,7 @@ page 55000 "Sales Sample Request"
                             field("Ship-to Post Code"; "Ship-to Post Code")
                             {
                                 ApplicationArea = Suite;
-                                CaptionML = ENU='Post Code',KOR='출고지우편번호';
+                                CaptionML = ENU = 'Post Code', KOR = '출고지우편번호';
                                 Editable = ShipToOptions = ShipToOptions::"Custom Address";
                                 QuickEntry = false;
                                 ToolTip = 'Specifies the postal code of the shipping address.';
@@ -452,31 +452,31 @@ page 55000 "Sales Sample Request"
                         field("Ship-to Contact"; "Ship-to Contact")
                         {
                             ApplicationArea = Suite;
-                            CaptionML = ENU='Contact',KOR='출고지 담당';
+                            CaptionML = ENU = 'Contact', KOR = '출고지 담당';
                             ToolTip = 'Specifies the name of the contact person at the address that products on the sales document will be shipped to.';
                         }
                     }
                     group("Shipment Method")
                     {
-                        CaptionML = ENU='Shipment Method',KOR='출고 정보';
+                        CaptionML = ENU = 'Shipment Method', KOR = '출고 정보';
                         field("Shipment Method Code"; "Shipment Method Code")
                         {
                             ApplicationArea = Suite;
-                            CaptionML = ENU='Code',KOR='출고방법코드';
+                            CaptionML = ENU = 'Code', KOR = '출고방법코드';
                             Importance = Additional;
                             ToolTip = 'Specifies how items on the sales document are shipped to the customer.';
                         }
                         field("Shipping Agent Code"; "Shipping Agent Code")
                         {
                             ApplicationArea = Suite;
-                            CaptionML = ENU='Agent',KOR='출고에이전트';
+                            CaptionML = ENU = 'Agent', KOR = '출고에이전트';
                             Importance = Additional;
                             ToolTip = 'Specifies which shipping agent is used to transport the items on the sales document to the customer.';
                         }
                         field("Shipping Agent Service Code"; "Shipping Agent Service Code")
                         {
                             ApplicationArea = Suite;
-                            CaptionML = ENU='Agent service',KOR='에이전트 서비스';
+                            CaptionML = ENU = 'Agent service', KOR = '에이전트 서비스';
                             Importance = Additional;
                             ToolTip = 'Specifies which shipping agent service is used to transport the items on the sales document to the customer.';
                         }
@@ -494,7 +494,7 @@ page 55000 "Sales Sample Request"
                     field(BillToOptions; BillToOptions)
                     {
                         ApplicationArea = Suite;
-                        CaptionML = ENU='Bill-to',KOR='청구처';
+                        CaptionML = ENU = 'Bill-to', KOR = '청구처';
                         OptionCaption = 'Default (Customer),Another Customer,Custom Address';
                         ToolTip = 'Specifies the customer that the sales invoice will be sent to. Default (Customer): The same as the customer on the sales invoice. Another Customer: Any customer that you specify in the fields below.';
 
@@ -515,7 +515,7 @@ page 55000 "Sales Sample Request"
                         field("Bill-to Name"; "Bill-to Name")
                         {
                             ApplicationArea = Suite;
-                            CaptionML = ENU='Name',KOR='청구처 이름';
+                            CaptionML = ENU = 'Name', KOR = '청구처 이름';
                             Editable = BillToOptions = BillToOptions::"Another Customer";
                             Enabled = BillToOptions = BillToOptions::"Another Customer";
                             Importance = Promoted;
@@ -539,7 +539,7 @@ page 55000 "Sales Sample Request"
                         field("Bill-to Address"; "Bill-to Address")
                         {
                             ApplicationArea = Suite;
-                            CaptionML = ENU='Address',KOR='청구지 주소';
+                            CaptionML = ENU = 'Address', KOR = '청구지 주소';
                             Editable = (BillToOptions = BillToOptions::"Custom Address") OR ("Bill-to Customer No." <> "Sell-to Customer No.");
                             Enabled = (BillToOptions = BillToOptions::"Custom Address") OR ("Bill-to Customer No." <> "Sell-to Customer No.");
                             Importance = Additional;
@@ -549,7 +549,7 @@ page 55000 "Sales Sample Request"
                         field("Bill-to Address 2"; "Bill-to Address 2")
                         {
                             ApplicationArea = Suite;
-                            CaptionML = ENU='Address 2',KOR='청구지 주소2';
+                            CaptionML = ENU = 'Address 2', KOR = '청구지 주소2';
                             Editable = (BillToOptions = BillToOptions::"Custom Address") OR ("Bill-to Customer No." <> "Sell-to Customer No.");
                             Enabled = (BillToOptions = BillToOptions::"Custom Address") OR ("Bill-to Customer No." <> "Sell-to Customer No.");
                             Importance = Additional;
@@ -559,7 +559,7 @@ page 55000 "Sales Sample Request"
                         field("Bill-to Post Code"; "Bill-to Post Code")
                         {
                             ApplicationArea = Suite;
-                            CaptionML = ENU='Post Code',KOR='청구지우편ㅂ너호';
+                            CaptionML = ENU = 'Post Code', KOR = '청구지우편ㅂ너호';
                             Editable = (BillToOptions = BillToOptions::"Custom Address") OR ("Bill-to Customer No." <> "Sell-to Customer No.");
                             Enabled = (BillToOptions = BillToOptions::"Custom Address") OR ("Bill-to Customer No." <> "Sell-to Customer No.");
                             Importance = Additional;
@@ -579,7 +579,7 @@ page 55000 "Sales Sample Request"
                         field("Bill-to Contact No."; "Bill-to Contact No.")
                         {
                             ApplicationArea = Suite;
-                            CaptionML = ENU='Contact No.',KOR='청구지 연락처 코드번호';
+                            CaptionML = ENU = 'Contact No.', KOR = '청구지 연락처 코드번호';
                             Editable = (BillToOptions = BillToOptions::"Custom Address") OR ("Bill-to Customer No." <> "Sell-to Customer No.");
                             Enabled = (BillToOptions = BillToOptions::"Custom Address") OR ("Bill-to Customer No." <> "Sell-to Customer No.");
                             Importance = Additional;
@@ -588,7 +588,7 @@ page 55000 "Sales Sample Request"
                         field("Bill-to Contact"; "Bill-to Contact")
                         {
                             ApplicationArea = Suite;
-                            CaptionML = ENU='Contact',KOR='청구지 담당연락';
+                            CaptionML = ENU = 'Contact', KOR = '청구지 담당연락';
                             Editable = (BillToOptions = BillToOptions::"Custom Address") OR ("Bill-to Customer No." <> "Sell-to Customer No.");
                             Enabled = (BillToOptions = BillToOptions::"Custom Address") OR ("Bill-to Customer No." <> "Sell-to Customer No.");
                             ToolTip = 'Specifies the name of the contact person at the billing address';
@@ -596,7 +596,7 @@ page 55000 "Sales Sample Request"
                         field(BillToContactPhoneNo; BillToContact."Phone No.")
                         {
                             ApplicationArea = Basic, Suite;
-                            CaptionML = ENU='Phone No.',KOR='청구처 담당전화';
+                            CaptionML = ENU = 'Phone No.', KOR = '청구처 담당전화';
                             Editable = false;
                             Importance = Additional;
                             ExtendedDatatype = PhoneNo;
@@ -605,7 +605,7 @@ page 55000 "Sales Sample Request"
                         field(BillToContactMobilePhoneNo; BillToContact."Mobile Phone No.")
                         {
                             ApplicationArea = Basic, Suite;
-                            CaptionML = ENU='Mobile Phone No.',KOR='청구처 담당휴대전화';
+                            CaptionML = ENU = 'Mobile Phone No.', KOR = '청구처 담당휴대전화';
                             Editable = false;
                             Importance = Additional;
                             ExtendedDatatype = PhoneNo;
@@ -614,7 +614,7 @@ page 55000 "Sales Sample Request"
                         field(BillToContactEmail; BillToContact."E-Mail")
                         {
                             ApplicationArea = Basic, Suite;
-                            CaptionML = ENU='Email',KOR='청구처 이메일';
+                            CaptionML = ENU = 'Email', KOR = '청구처 이메일';
                             Editable = false;
                             Importance = Additional;
                             ExtendedDatatype = EMail;
@@ -625,7 +625,7 @@ page 55000 "Sales Sample Request"
             }
             group("Foreign Trade")
             {
-                CaptionML = ENU='Foreign Trade',KOR='해외 거래';
+                CaptionML = ENU = 'Foreign Trade', KOR = '해외 거래';
                 field("EU 3-Party Trade"; "EU 3-Party Trade")
                 {
                     ApplicationArea = BasicEU;
@@ -658,7 +658,7 @@ page 55000 "Sales Sample Request"
             part("Attached Documents"; "Document Attachment Factbox")
             {
                 ApplicationArea = All;
-                CaptionML = ENU='Attachments',KOR='첨부';
+                CaptionML = ENU = 'Attachments', KOR = '첨부';
                 SubPageLink = "Table ID" = CONST(36),
                               "No." = FIELD("No."),
                               "Document Type" = FIELD("Document Type");
@@ -728,12 +728,12 @@ page 55000 "Sales Sample Request"
         {
             group("O&rder")
             {
-                CaptionML = ENU='O&rder',KOR='주문';
+                CaptionML = ENU = 'O&rder', KOR = '주문';
                 Image = "Order";
                 action(Statistics)
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Statistics',KOR='상태';
+                    CaptionML = ENU = 'Statistics', KOR = '상태';
                     Image = Statistics;
                     Promoted = true;
                     PromotedCategory = Category8;
@@ -755,7 +755,7 @@ page 55000 "Sales Sample Request"
                 action(Card)
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Card',KOR='카드';
+                    CaptionML = ENU = 'Card', KOR = '카드';
                     Image = EditLines;
                     Promoted = true;
                     PromotedCategory = Category8;
@@ -767,7 +767,7 @@ page 55000 "Sales Sample Request"
                 action("Co&mments")
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Co&mments',KOR='주석';
+                    CaptionML = ENU = 'Co&mments', KOR = '주석';
                     Image = ViewComments;
                     Promoted = true;
                     PromotedCategory = Category8;
@@ -781,7 +781,7 @@ page 55000 "Sales Sample Request"
                 {
                     AccessByPermission = TableData Dimension = R;
                     ApplicationArea = Dimensions;
-                    CaptionML = ENU='Dimensions',KOR='관리항목';
+                    CaptionML = ENU = 'Dimensions', KOR = '관리항목';
                     Enabled = "No." <> '';
                     Image = Dimensions;
                     Promoted = true;
@@ -799,7 +799,7 @@ page 55000 "Sales Sample Request"
                 {
                     AccessByPermission = TableData "Approval Entry" = R;
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Approvals',KOR='승인';
+                    CaptionML = ENU = 'Approvals', KOR = '승인';
                     Image = Approvals;
                     Promoted = true;
                     PromotedCategory = Category8;
@@ -815,7 +815,7 @@ page 55000 "Sales Sample Request"
                 action(DocAttach)
                 {
                     ApplicationArea = All;
-                    CaptionML = ENU='Attachments',KOR='첨부';
+                    CaptionML = ENU = 'Attachments', KOR = '첨부';
                     Image = Attach;
                     Promoted = true;
                     PromotedCategory = Category8;
@@ -837,11 +837,11 @@ page 55000 "Sales Sample Request"
         {
             group(Approval)
             {
-                CaptionML = ENU='Approval',KOR='승인';
+                CaptionML = ENU = 'Approval', KOR = '승인';
                 action(Approve)
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Approve',KOR='승인';
+                    CaptionML = ENU = 'Approve', KOR = '승인';
                     Image = Approve;
                     Promoted = true;
                     PromotedCategory = Category4;
@@ -860,7 +860,7 @@ page 55000 "Sales Sample Request"
                 action(Reject)
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Reject',KOR='반려';
+                    CaptionML = ENU = 'Reject', KOR = '반려';
                     Image = Reject;
                     Promoted = true;
                     PromotedCategory = Category4;
@@ -879,7 +879,7 @@ page 55000 "Sales Sample Request"
                 action(Delegate)
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Delegate',KOR='위임';
+                    CaptionML = ENU = 'Delegate', KOR = '위임';
                     Image = Delegate;
                     Promoted = true;
                     PromotedCategory = Category4;
@@ -897,7 +897,7 @@ page 55000 "Sales Sample Request"
                 action(Comment)
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Comments',KOR='주석';
+                    CaptionML = ENU = 'Comments', KOR = '주석';
                     Image = ViewComments;
                     Promoted = true;
                     PromotedCategory = Category4;
@@ -915,13 +915,13 @@ page 55000 "Sales Sample Request"
             }
             group("F&unctions")
             {
-                CaptionML = ENU='F&unctions',KOR='기능';
+                CaptionML = ENU = 'F&unctions', KOR = '기능';
                 Image = "Action";
                 action(CalculateInvoiceDiscount)
                 {
                     AccessByPermission = TableData "Cust. Invoice Disc." = R;
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Calculate &Invoice Discount',KOR='송장할인 계산';
+                    CaptionML = ENU = 'Calculate &Invoice Discount', KOR = '송장할인 계산';
                     Image = CalculateInvoiceDiscount;
                     ToolTip = 'Calculate the invoice discount that applies to the sales order.';
 
@@ -937,7 +937,7 @@ page 55000 "Sales Sample Request"
                 action(CopyDocument)
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Copy Document',KOR='문서 복사';
+                    CaptionML = ENU = 'Copy Document', KOR = '문서 복사';
                     Ellipsis = true;
                     Enabled = "No." <> '';
                     Image = CopyDocument;
@@ -951,7 +951,7 @@ page 55000 "Sales Sample Request"
                 action("Archi&ve Document")
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Archi&ve Document',KOR='문서 보관';
+                    CaptionML = ENU = 'Archi&ve Document', KOR = '문서 보관';
                     Image = Archive;
                     ToolTip = 'Archive document.';
 
@@ -967,7 +967,7 @@ page 55000 "Sales Sample Request"
                 action(Release)
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Re&lease',KOR='확정';
+                    CaptionML = ENU = 'Re&lease', KOR = '확정';
                     Image = ReleaseDoc;
                     Promoted = true;
                     PromotedCategory = Category7;
@@ -986,7 +986,7 @@ page 55000 "Sales Sample Request"
                 action(Reopen)
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Re&open',KOR='다시열기';
+                    CaptionML = ENU = 'Re&open', KOR = '다시열기';
                     Enabled = Status <> Status::Open;
                     Image = ReOpen;
                     Promoted = true;
@@ -1002,30 +1002,32 @@ page 55000 "Sales Sample Request"
                     end;
                 }
             }
-            /*            
-                        action(MakeOrder)
-                        {
-                            ApplicationArea = Suite;
-                            Caption = 'Make &Order';
-                            Image = MakeOrder;
-                            Promoted = true;
-                            PromotedCategory = Process;
-                            PromotedIsBig = true;
-                            ToolTip = 'Convert the blanket sales order to a sales order.';
 
-                            trigger OnAction()
-                            var
-                                ApprovalsMgmt: Codeunit "Approvals Mgmt.";
-                            begin
-                                if ApprovalsMgmt.PrePostApprovalCheckSales(Rec) then
-                                    CODEUNIT.Run(CODEUNIT::"Blnkt Sales Ord. to Ord. (Y/N)", Rec);
-                            end;
-                        }
-            */
+            action(MakeOrder)
+            {
+                ApplicationArea = Suite;
+                CaptionML = ENU = 'Make &Order', KOR = '샘플주문서 생성';
+                Image = MakeOrder;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                ToolTipML = ENU = 'Convert the Sample Sales Request to a sample sales order.', KOR = '샘플요청서에서 샘플주문서를 생성합니다.';
+
+                trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                    FFPackage: Codeunit "FF Package Functions";
+                begin
+                    //Approval Check.
+                    if ApprovalsMgmt.PrePostApprovalCheckSales(Rec) then
+                        FFPackage.makeSampletoOrder(Rec); //Make an Order.
+                end;
+            }
+
             action(Print)
             {
                 ApplicationArea = Suite;
-                CaptionML = ENU='&Print',KOR='인쇄';
+                CaptionML = ENU = '&Print', KOR = '인쇄';
                 Ellipsis = true;
                 Image = Print;
                 Promoted = true;
@@ -1040,7 +1042,7 @@ page 55000 "Sales Sample Request"
             action(AttachAsPDF)
             {
                 ApplicationArea = Basic, Suite;
-                CaptionML = ENU='Attach as PDF',KOR='PDF로 첨부';
+                CaptionML = ENU = 'Attach as PDF', KOR = 'PDF로 첨부';
                 Image = PrintAttachment;
                 Promoted = true;
                 PromotedCategory = Category6;
@@ -1059,11 +1061,11 @@ page 55000 "Sales Sample Request"
             }
             group("Request Approval")
             {
-                CaptionML = ENU='Request Approval',KOR='승인 요청';
+                CaptionML = ENU = 'Request Approval', KOR = '승인 요청';
                 action(SendApprovalRequest)
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Send A&pproval Request',KOR='승인요청 전송';
+                    CaptionML = ENU = 'Send A&pproval Request', KOR = '승인요청 전송';
                     Enabled = NOT OpenApprovalEntriesExist;
                     Image = SendApprovalRequest;
                     Promoted = true;
@@ -1082,7 +1084,7 @@ page 55000 "Sales Sample Request"
                 action(CancelApprovalRequest)
                 {
                     ApplicationArea = Suite;
-                    CaptionML = ENU='Cancel Approval Re&quest',KOR='승인요청 취소';
+                    CaptionML = ENU = 'Cancel Approval Re&quest', KOR = '승인요청 취소';
                     Enabled = CanCancelApprovalForRecord;
                     Image = CancelApprovalRequest;
                     Promoted = true;
@@ -1116,8 +1118,19 @@ page 55000 "Sales Sample Request"
     end;
 
     trigger OnDeleteRecord(): Boolean
+    var
+        SalesLine: Record "Sales Line";
     begin
         CurrPage.SaveRecord;
+        SalesLine.Reset();
+        SalesLine.SetRange("Document Type", "Document Type"::"Sample Request");
+        SalesLine.SetRange("Document No.", Rec."No.");
+        if SalesLine.FindSet() then begin
+            repeat
+                if (SalesLine."Qty. Invoiced (Base)" <> 0) OR (SalesLine."Qty. Shipped (Base)" <> 0) then
+                    Error('라인에, 이미 처리된 출고,송장이 있는 경우 샘플요청서를 삭제하실 수 없습니다.');
+            until SalesLine.Next() = 0;
+        end;
         exit(ConfirmDeletion);
     end;
 
@@ -1134,6 +1147,7 @@ page 55000 "Sales Sample Request"
     begin
         xRec.Init();
         "Responsibility Center" := UserMgt.GetSalesFilter;
+        isRelatedSample := true;
         if (not DocNoVisible) and ("No." = '') then
             SetSellToCustomerFromFilter;
         UpdateShipToBillToGroupVisibility;
@@ -1208,14 +1222,14 @@ page 55000 "Sales Sample Request"
 
     /*
     // 기존 Order 에서 사용한 SetDocNoVisible 을 샘플용으로 사용하도록 따로 구성함.
-    */    
+    */
     local procedure SetDocNoVisible()
     var
         DocumentNoVisibility: Codeunit "FF Package Functions";
     begin
         DocNoVisible := DocumentNoVisibility.SalesDocumentNoIsVisible("No.");
     end;
-    
+
     local procedure SetControlAppearance()
     var
         ApprovalsMgmt: Codeunit "Approvals Mgmt.";

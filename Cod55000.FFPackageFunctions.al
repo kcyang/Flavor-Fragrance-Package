@@ -8,10 +8,144 @@ codeunit 55000 "FF Package Functions"
     [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterGetNoSeriesCode', '', false, false)]
     local procedure OnAfterGetNoSeriesCode(var SalesHeader: Record "Sales Header"; SalesReceivablesSetup: Record "Sales & Receivables Setup"; var NoSeriesCode: Code[20])
     begin
-        if SalesHeader."Document Type" = SalesHeader."Document Type"::"Sample Request" then
-        begin
+        if SalesHeader."Document Type" = SalesHeader."Document Type"::"Sample Request" then begin
             NoSeriesCode := SalesReceivablesSetup."Sample Request Nos";
         end;
+    end;
+    //샘플요청서에서, 영업사원을 변경할 경우, Approval 관련오류처리, Sales Document Type의 Sample Request 항목을 처리해줘야 함.
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Enum Assignment Management", 'OnGetSalesApprovalDocumentType', '', false, false)]
+    local procedure OnGetSalesApprovalDocumentType(SalesDocumentType: Enum "Sales Document Type"; var ApprovalDocumentType: Enum "Approval Document Type"; var IsHandled: Boolean)
+    begin
+        if SalesDocumentType = SalesDocumentType::"Sample Request" then
+        begin
+            ApprovalDocumentType := "Approval Document Type"::"Sample Request";
+            IsHandled := true;
+        end;   
+    end;
+    //샘플요청서의 경우, 관련 주문서가 처리될 때, Blanket 으로 처리하되, Sample 관련문서로 처리되도록 이벤트를 선처리후,
+    //샘플의 경우, 처리되면, 이후 Blanket 관련 프로세스는 건너뛰도록 isHandled -> True 처리함.
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnBeforeUpdateBlanketOrderLine', '', false, false)]
+    local procedure OnBeforeUpdateBlanketOrderLine(SalesLine: Record "Sales Line"; Ship: Boolean; Receive: Boolean; Invoice: Boolean; var IsHandled: Boolean)
+    var
+        BlanketOrderSalesLine: Record "Sales Line";
+        xBlanketOrderSalesLine: Record "Sales Line";
+        ModifyLine: Boolean;
+        Sign: Decimal;
+        UOMMgt: Codeunit "Unit of Measure Management";
+        AsmPost: Codeunit "Assembly-Post";
+        BlanketOrderQuantityGreaterThanErr: Label '샘플요청서의 수량이 %1보다 클수 없습니다.', Comment = '%1 = 수량';
+        BlanketOrderQuantityReducedErr: Label '샘플요청서의 수량을 줄이시면 안됩니다.';
+    begin
+        IsHandled := false;
+        if (SalesLine."Blanket Order No." <> '') and (SalesLine."Blanket Order Line No." <> 0) and
+           ((Ship and (SalesLine."Qty. to Ship" <> 0)) or
+            (Receive and (SalesLine."Return Qty. to Receive" <> 0)) or
+            (Invoice and (SalesLine."Qty. to Invoice" <> 0)))
+        then
+            //Sample Request.
+            if BlanketOrderSalesLine.Get(
+                 BlanketOrderSalesLine."Document Type"::"Sample Request", SalesLine."Blanket Order No.",
+                 SalesLine."Blanket Order Line No.")
+            then begin
+                BlanketOrderSalesLine.TestField(Type, SalesLine.Type);
+                BlanketOrderSalesLine.TestField("No.", SalesLine."No.");
+                IsHandled := false;
+
+                if not IsHandled then
+                    BlanketOrderSalesLine.TestField("Sell-to Customer No.", SalesLine."Sell-to Customer No.");
+
+                ModifyLine := false;
+                case SalesLine."Document Type" of
+                    SalesLine."Document Type"::Order,
+                  SalesLine."Document Type"::Invoice:
+                        Sign := 1;
+                    SalesLine."Document Type"::"Return Order",
+                  SalesLine."Document Type"::"Credit Memo":
+                        Sign := -1;
+                end;
+                if Ship and (SalesLine."Shipment No." = '') then begin
+                    xBlanketOrderSalesLine := BlanketOrderSalesLine;
+
+                    if BlanketOrderSalesLine."Qty. per Unit of Measure" = SalesLine."Qty. per Unit of Measure" then
+                        BlanketOrderSalesLine."Quantity Shipped" += Sign * SalesLine."Qty. to Ship"
+                    else
+                        BlanketOrderSalesLine."Quantity Shipped" +=
+                          Sign *
+                          Round(
+                            (SalesLine."Qty. per Unit of Measure" /
+                             BlanketOrderSalesLine."Qty. per Unit of Measure") * SalesLine."Qty. to Ship",
+                            UOMMgt.QtyRndPrecision);
+                    BlanketOrderSalesLine."Qty. Shipped (Base)" += Sign * SalesLine."Qty. to Ship (Base)";
+                    ModifyLine := true;
+
+                    AsmPost.UpdateBlanketATO(xBlanketOrderSalesLine, BlanketOrderSalesLine);
+                end;
+                if Receive and (SalesLine."Return Receipt No." = '') then begin
+                    if BlanketOrderSalesLine."Qty. per Unit of Measure" =
+                       SalesLine."Qty. per Unit of Measure"
+                    then
+                        BlanketOrderSalesLine."Quantity Shipped" += Sign * SalesLine."Return Qty. to Receive"
+                    else
+                        BlanketOrderSalesLine."Quantity Shipped" +=
+                          Sign *
+                          Round(
+                            (SalesLine."Qty. per Unit of Measure" /
+                             BlanketOrderSalesLine."Qty. per Unit of Measure") * SalesLine."Return Qty. to Receive",
+                            UOMMgt.QtyRndPrecision);
+                    BlanketOrderSalesLine."Qty. Shipped (Base)" += Sign * SalesLine."Return Qty. to Receive (Base)";
+                    ModifyLine := true;
+                end;
+                if Invoice then begin
+                    if BlanketOrderSalesLine."Qty. per Unit of Measure" =
+                       SalesLine."Qty. per Unit of Measure"
+                    then
+                        BlanketOrderSalesLine."Quantity Invoiced" += Sign * SalesLine."Qty. to Invoice"
+                    else
+                        BlanketOrderSalesLine."Quantity Invoiced" +=
+                          Sign *
+                          Round(
+                            (SalesLine."Qty. per Unit of Measure" /
+                             BlanketOrderSalesLine."Qty. per Unit of Measure") * SalesLine."Qty. to Invoice",
+                            UOMMgt.QtyRndPrecision);
+                    BlanketOrderSalesLine."Qty. Invoiced (Base)" += Sign * SalesLine."Qty. to Invoice (Base)";
+                    ModifyLine := true;
+                end;
+
+                if ModifyLine then begin
+                    BlanketOrderSalesLine.InitOutstanding();
+                    IsHandled := false;
+                    if not IsHandled then begin
+                        if (BlanketOrderSalesLine.Quantity * BlanketOrderSalesLine."Quantity Shipped" < 0) or
+                           (Abs(BlanketOrderSalesLine.Quantity) < Abs(BlanketOrderSalesLine."Quantity Shipped"))
+                        then
+                            BlanketOrderSalesLine.FieldError(
+                              "Quantity Shipped", StrSubstNo(BlanketOrderQuantityGreaterThanErr, BlanketOrderSalesLine.FieldCaption(Quantity)));
+                        if (BlanketOrderSalesLine."Quantity (Base)" * BlanketOrderSalesLine."Qty. Shipped (Base)" < 0) or
+                           (Abs(BlanketOrderSalesLine."Quantity (Base)") < Abs(BlanketOrderSalesLine."Qty. Shipped (Base)"))
+                        then
+                            BlanketOrderSalesLine.FieldError(
+                              "Qty. Shipped (Base)",
+                              StrSubstNo(BlanketOrderQuantityGreaterThanErr, BlanketOrderSalesLine.FieldCaption("Quantity (Base)")));
+                        BlanketOrderSalesLine.CalcFields("Reserved Qty. (Base)");
+                        if Abs(BlanketOrderSalesLine."Outstanding Qty. (Base)") < Abs(BlanketOrderSalesLine."Reserved Qty. (Base)") then
+                            BlanketOrderSalesLine.FieldError(
+                              "Reserved Qty. (Base)", BlanketOrderQuantityReducedErr);
+                    end;
+
+                    BlanketOrderSalesLine."Qty. to Invoice" :=
+                      BlanketOrderSalesLine.Quantity - BlanketOrderSalesLine."Quantity Invoiced";
+                    BlanketOrderSalesLine."Qty. to Ship" :=
+                      BlanketOrderSalesLine.Quantity - BlanketOrderSalesLine."Quantity Shipped";
+                    BlanketOrderSalesLine."Qty. to Invoice (Base)" :=
+                      BlanketOrderSalesLine."Quantity (Base)" - BlanketOrderSalesLine."Qty. Invoiced (Base)";
+                    BlanketOrderSalesLine."Qty. to Ship (Base)" :=
+                      BlanketOrderSalesLine."Quantity (Base)" - BlanketOrderSalesLine."Qty. Shipped (Base)";
+
+                    BlanketOrderSalesLine.Modify();
+                end;
+                IsHandled := true;
+            end;
+
     end;
     /// <summary>
     /// 기본, Sample Request 문서에 대한 번호시리즈 셋팅입니다.
@@ -28,7 +162,7 @@ codeunit 55000 "FF Package Functions"
     begin
         IsHandled := false;
         IsVisible := false;
-        
+
         if IsHandled then
             exit(IsVisible);
 
@@ -55,8 +189,9 @@ codeunit 55000 "FF Package Functions"
         SalesReceivablesSetup.Get();
         SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::"Sample Request");
         CheckNumberSeries(SalesHeader, SalesReceivablesSetup."Sample Request Nos", SalesHeader.FieldNo("No."));
-        exit(SalesReceivablesSetup."Sample Request Nos");        
-    end;    
+        exit(SalesReceivablesSetup."Sample Request Nos");
+    end;
+
     /// <summary>
     /// 내부 사용 SalesDocumentNoIsVisibled에서 사용합니다.
     /// </summary>
@@ -80,7 +215,8 @@ codeunit 55000 "FF Package Functions"
             exit(true);
 
         exit(NoSeriesMgt.DoGetNextNo(NoSeriesCode, SeriesDate, false, true) = '');
-    end;    
+    end;
+
     /// <summary>
     /// 내부 사용 SalesDocumentNoIsVisibled에서 사용합니다.
     /// </summary>
@@ -103,5 +239,24 @@ codeunit 55000 "FF Package Functions"
                 CheckNumberSeries(RecRef, NoSeriesCode, FieldNo);
             end;
         end;
-    end;    
+    end;
+
+    procedure makeSampletoOrder(var Rec: Record "Sales Header")
+    var
+        CreateConfirmQst: Label '샘플요청서에서 샘플주문서를 생성하시겠습니까?';
+        OrderCreatedMsg: Label '샘플주문서 <%1>가 샘플요청서 <%2>에서 생성되었습니다.', Comment = '%1 = Sample Request No., %2 = Sample Order No.';
+        SalesOrderHeader: Record "Sales Header";
+        SampleSalesOrderToOrder: Codeunit "Sample Request to Order";
+        SkipMessage: Boolean;
+    begin
+        if GuiAllowed then
+            if not Confirm(CreateConfirmQst, false) then
+                exit;
+        SampleSalesOrderToOrder.Run(Rec);
+        SampleSalesOrderToOrder.GetSalesOrderHeader(SalesOrderHeader);
+
+        if not SkipMessage then
+            Message(OrderCreatedMsg, SalesOrderHeader."No.", Rec."No.");
+    end;
+
 }

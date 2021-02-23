@@ -887,6 +887,9 @@ page 55001 "Sales Sample Request Subform"
     trigger OnDeleteRecord(): Boolean
     begin
         DocumentTotals.SalesDocTotalsNotUpToDate();
+        //라인삭제 불가처리.
+        if (Rec."Qty. Invoiced (Base)" <> 0) OR (Rec."Qty. Shipped (Base)" <> 0) then
+            Error('이미 처리된 송장이나 출고서가 있는 경우, 라인을 삭제하실 수 없습니다.'); 
     end;
 
     trigger OnFindRecord(Which: Text): Boolean
