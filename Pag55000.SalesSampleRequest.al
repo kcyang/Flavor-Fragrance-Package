@@ -626,6 +626,7 @@ page 55000 "Sales Sample Request"
             group("Foreign Trade")
             {
                 CaptionML = ENU = 'Foreign Trade', KOR = '해외 거래';
+                Visible = false;
                 field("EU 3-Party Trade"; "EU 3-Party Trade")
                 {
                     ApplicationArea = BasicEU;
@@ -1021,6 +1022,28 @@ page 55000 "Sales Sample Request"
                     //Approval Check.
                     if ApprovalsMgmt.PrePostApprovalCheckSales(Rec) then
                         FFPackage.makeSampletoOrder(Rec); //Make an Order.
+                end;
+            }
+            action(SampleRequestPrint)
+            {
+                ApplicationArea = All;
+                CaptionML = ENU = 'Sample Request', KOR = '샘플요청서';
+                Ellipsis = true;
+                Image = PrintDocument;
+                Promoted = true;
+                PromotedCategory = Category6;
+                ToolTip = '샘플요청서를 인쇄합니다.';
+
+                trigger OnAction()
+                var 
+                    SampleRequest: Report "Sample Request";
+                    SH: Record "Sales Header";
+                begin
+                    SH.Reset();
+                    SH.SetRange("Document Type",SH."Document Type"::"Sample Request");
+                    SH.SetRange("No.",Rec."No.");
+                    SampleRequest.SetTableView(SH);
+                    SampleRequest.Run();
                 end;
             }
 

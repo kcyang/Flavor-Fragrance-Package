@@ -178,17 +178,31 @@ page 55001 "Sales Sample Request Subform"
                         DeltaUpdateTotals();
                     end;
                 }
+                
                 field("Unit of Measure"; "Unit of Measure")
                 {
                     ApplicationArea = Suite;
                     ToolTip = 'Specifies the name of the item or resource''s unit of measure, such as piece or hour.';
                     Visible = false;
                 }
+                field(Application;Application)
+                {
+                    ApplicationArea = All;
+                    CaptionML = ENU='Application',KOR='Application';
+                    ToolTip = 'Application 을 정의합니다.';
+                }
+                field(Direction;Direction)
+                {
+                    ApplicationArea = All;
+                    CaptionML = ENU='Direction',KOR='Direction(방향)';
+                    ToolTip = '방향(Direction)을 정의합니다.';
+                }
                 field("Unit Cost (LCY)"; "Unit Cost (LCY)")
                 {
                     ApplicationArea = Suite;
-                    ToolTip = 'Specifies the cost, in LCY, of one unit of the item or resource on the line.';
-                    Visible = false;
+                    CaptionML = ENU='Cost (LCY)',KOR='원가';
+                    ToolTip = '샘플요청서에 표시될 원가를 표시하시면 됩니다.';
+                    //Visible = false;
                 }
                 field(PriceExists; PriceExists)
                 {
@@ -200,6 +214,7 @@ page 55001 "Sales Sample Request Subform"
                 }
                 field("Unit Price"; "Unit Price")
                 {
+                    CaptionML = ENU='Unit Price',KOR='단가';
                     ApplicationArea = Suite;
                     BlankZero = true;
                     ToolTip = 'Specifies the price of one unit of the item or resource. You can enter a price manually or have it entered according to the Price/Profit Calculation field on the related card.';
@@ -249,6 +264,7 @@ page 55001 "Sales Sample Request Subform"
                 }
                 field("Line Amount"; "Line Amount")
                 {
+                    CaptionML = ENU='Line Amount',KOR='라인금액(부가세제외)';
                     ApplicationArea = Suite;
                     BlankZero = true;
                     ToolTip = 'Specifies the net amount, excluding any invoice discount amount, that must be paid for products on the line.';
@@ -290,18 +306,21 @@ page 55001 "Sales Sample Request Subform"
                 }
                 field("Qty. to Ship"; "Qty. to Ship")
                 {
+                    CaptionML = ENU='Qty. to Ship',KOR='출고 수량';
                     ApplicationArea = Suite;
                     BlankZero = true;
                     ToolTip = 'Specifies the quantity of items that remain to be shipped.';
                 }
                 field("Quantity Shipped"; "Quantity Shipped")
                 {
+                    CaptionML = ENU='Quantity Shipped',KOR='출고완료 수량';
                     ApplicationArea = Suite;
                     BlankZero = true;
                     ToolTip = 'Specifies how many units of the item on the line have been posted as shipped.';
                 }
                 field("Quantity Invoiced"; "Quantity Invoiced")
                 {
+                    CaptionML = ENU='Quantity Invoiced',KOR='송장완료 수량';
                     ApplicationArea = Suite;
                     BlankZero = true;
                     ToolTip = 'Specifies how many units of the item on the line have been posted as invoiced.';

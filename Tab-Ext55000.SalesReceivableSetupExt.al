@@ -11,5 +11,11 @@ tableextension 55000 "Sales & Receivable Setup Ext" extends "Sales & Receivables
             TableRelation = "No. Series";
             DataClassification = CustomerContent;
         }
+        field(55001; "Sample Item No."; Code[20])
+        {
+            CaptionML = ENU='Sample Item No.',KOR='샘플품목번호';
+            TableRelation = "Item";
+            DataClassification = CustomerContent;
+        }        
     }
 }
