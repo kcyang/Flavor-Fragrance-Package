@@ -35,7 +35,30 @@ page 55001 "Sales Sample Request Subform"
                 {
                     ApplicationArea = Suite;
                     ToolTip = 'Specifies the number of the involved entry or record, according to the specified number series.';
-
+                    trigger OnLookup(var Text: Text): Boolean
+                    var
+                        Item: Record Item;
+                        ItemList: Page "Item List";
+                        SalesSetup: Record "Sales & Receivables Setup";
+                    begin
+                        //품목유형인 경우, 외상매출설정에 정의된 품목으로 선택하도록 한다.
+                        if Type = Type::Item then begin
+                            if SalesSetup.Get() then
+                            begin
+                                if SalesSetup."Sample Item No." = '' then
+                                    Error('외상매출 설정에, 샘플 품목번호를 먼저 지정하시기 바랍니다.');
+                                Item.Reset();                                
+                                Item.SetRange("No.",SalesSetup."Sample Item No.");
+                                ItemList.SetTableView(Item);
+                                ItemList.LookupMode(true);
+                                if ItemList.RunModal() = Action::LookupOK then
+                                begin
+                                    ItemList.GetRecord(Item);
+                                    Validate("No.",Item."No.");
+                                end;
+                            end;
+                        end;
+                    end;
                     trigger OnValidate()
                     begin
                         ShowShortcutDimCode(ShortcutDimCode);
@@ -729,6 +752,7 @@ page 55001 "Sales Sample Request Subform"
                         DocumentAttachmentDetails.RunModal;
                     end;
                 }
+/*                
                 action("Co&mments")
                 {
                     ApplicationArea = Comments;
@@ -741,6 +765,7 @@ page 55001 "Sales Sample Request Subform"
                         ShowLineComments();
                     end;
                 }
+*/                
                 group("Assemble to Order")
                 {
                     CaptionML = ENU='Assemble to Order',KOR='조립주문';

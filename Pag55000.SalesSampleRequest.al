@@ -154,6 +154,12 @@ page 55000 "Sales Sample Request"
                     ApplicationArea = Suite;
                     ToolTip = 'Specifies the number of archived versions for this document.';
                 }
+                field("Requested Delivery Date";"Requested Delivery Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = '샘플요청 요구일자를 적습니다.';
+                    Importance = Promoted;
+                }
                 field("Document Date"; "Document Date")
                 {
                     ApplicationArea = Suite;
@@ -190,11 +196,13 @@ page 55000 "Sales Sample Request"
                         SalespersonCodeOnAfterValidate;
                     end;
                 }
+/*                
                 field("Campaign No."; "Campaign No.")
                 {
                     ApplicationArea = Suite;
                     ToolTip = 'Specifies the number of the campaign that the document is linked to.';
                 }
+*/                
                 field("Responsibility Center"; "Responsibility Center")
                 {
                     ApplicationArea = Suite;
@@ -1046,7 +1054,7 @@ page 55000 "Sales Sample Request"
                     SampleRequest.Run();
                 end;
             }
-
+/* //동작하지 않음. //FIXME 나중에 삭제처리.
             action(Print)
             {
                 ApplicationArea = Suite;
@@ -1082,6 +1090,7 @@ page 55000 "Sales Sample Request"
                     DocPrint.PrintSalesHeaderToDocumentAttachment(SalesHeader);
                 end;
             }
+*/            
             group("Request Approval")
             {
                 CaptionML = ENU = 'Request Approval', KOR = '승인 요청';

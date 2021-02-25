@@ -21,7 +21,7 @@ report 55000 "Sample Request"
             {
 
             }
-            column(Requested_Delivery_Date; "Requested Delivery Date")
+            column(RequiredDateText;RequiredDateText)
             {
 
             }
@@ -30,6 +30,14 @@ report 55000 "Sample Request"
 
             }
             column(ShipmentMethodText; ShipmentMethodText)
+            {
+
+            }
+            column(CompanyInfo; CompanyInfo.Picture)
+            {
+
+            }
+            column(SampleComment;SampleComment)
             {
 
             }
@@ -90,8 +98,12 @@ report 55000 "Sample Request"
             var
                 SalesPerson: Record "Salesperson/Purchaser";
                 ShipmentMethod: Record "Shipment Method";
+                SalesComment: Record "Sales Comment Line";
+                
+                CRLF: Text [2];
             begin
                 DocumentDateText := Format("Sales Header"."Document Date", 0, '<Year4>-<Month,2>-<Day,2>');
+                RequiredDateText := Format("Sales Header"."Requested Delivery Date", 0, '<Year4>-<Month,2>-<Day,2>');
                 IF "Sales Header"."Salesperson Code" <> '' then begin
                     if SalesPerson.Get("Sales Header"."Salesperson Code") then
                         SalesPersonName := SalesPerson.Name
@@ -104,6 +116,23 @@ report 55000 "Sample Request"
                     else
                         ShipmentMethodText := '';
                 end;
+                if CompanyInfo.get() then
+                    CompanyInfo.CalcFields(Picture);
+                
+                SalesComment.Reset();
+                SalesComment.SetRange("Document Type",SalesComment."Document Type"::"Sample Request");
+                SalesComment.SetRange("No.","Sales Header"."No.");
+                if SalesComment.FindSet() then
+                begin
+                    CRLF := '';
+                    CRLF[1] := 13;
+                    CRLF[2] := 10;
+                    repeat
+                        SampleComment += SalesComment.Comment;
+                        SampleComment += CRLF;
+                    until SalesComment.Next() = 0;
+                end;
+                
             end;
         }
     }
@@ -131,4 +160,7 @@ report 55000 "Sample Request"
         SalesPersonName: Text;
         DocumentDateText: Text;
         ShipmentMethodText: Text;
+        SampleComment: Text;
+        RequiredDateText: Text;
+        CompanyInfo: Record "Company Information";
 }
