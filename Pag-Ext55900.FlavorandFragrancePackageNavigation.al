@@ -45,6 +45,18 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
                     ApplicationArea = All;
                     ToolTip = '패키지에서 사용하는 코드를 관리합니다.';
                 }        
+                group(Session)
+                {
+                    Caption = 'Session Manage';
+                    action("ActiveSession")
+                    {
+                        CaptionML = ENU = 'Active Session', KOR = '살아있는 세션';
+                        RunObject = page "Active Session List";
+                        ApplicationArea = All;
+                        ToolTip = '세션을 관리합니다.';
+                    }        
+
+                }
             }
         }
     }

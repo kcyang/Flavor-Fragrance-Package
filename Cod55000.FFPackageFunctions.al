@@ -22,6 +22,51 @@ codeunit 55000 "FF Package Functions"
             IsHandled := true;
         end;   
     end;
+    //품목변경을 진행할 때, Sample Order 에서 Blanket Order No. 를 입력할 수 있도록 처리함.
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", 'OnBeforeValidateBlanketOrderNo', '', false, false)]
+    local procedure OnBeforeValidateBlanketOrderNo(var SalesLine: Record "Sales Line"; xSalesLine: Record "Sales Line"; CurrentFieldNo: Integer; var IsHandled: Boolean)
+    var
+        SalesSetup: Record "Sales & Receivables Setup";
+        SalesLine2: Record "Sales Line";
+    begin
+        if SalesSetup.Get() then
+        begin
+            if xSalesLine."No." = SalesSetup."Sample Item No." then
+            begin
+                IsHandled := true;
+                SalesLine."Blanket Order Line No." := xSalesLine."Blanket Order Line No.";
+            end else 
+            begin
+                //원래 Blanket Order Line No. 에서 처리된 부분,
+                IsHandled := true;
+                SalesLine.TestField(SalesLine."Quantity Shipped", 0);
+                if SalesLine."Blanket Order Line No." <> 0 then begin
+                    SalesLine2.Get(SalesLine."Document Type"::"Blanket Order", SalesLine."Blanket Order No.", SalesLine."Blanket Order Line No.");
+                    SalesLine2.TestField(Type, SalesLine.Type);
+                    SalesLine2.TestField("No.", SalesLine."No.");
+                    SalesLine2.TestField("Bill-to Customer No.", SalesLine."Bill-to Customer No.");
+                    SalesLine2.TestField("Sell-to Customer No.", SalesLine."Sell-to Customer No.");
+                    if SalesLine."Drop Shipment" then begin
+                        SalesLine2.TestField("Variant Code", SalesLine."Variant Code");
+                        SalesLine2.TestField("Location Code", SalesLine."Location Code");
+                        SalesLine2.TestField("Unit of Measure Code", SalesLine."Unit of Measure Code");
+                    end else begin
+                        SalesLine.Validate("Variant Code", SalesLine2."Variant Code");
+                        SalesLine.Validate("Location Code", SalesLine2."Location Code");
+                        SalesLine.Validate("Unit of Measure Code", SalesLine2."Unit of Measure Code");
+                    end;
+                    SalesLine.Validate("Unit Price", SalesLine2."Unit Price");
+                    SalesLine.Validate("Line Discount %", SalesLine2."Line Discount %");
+                end;   
+            end;
+        end;
+    end;
+    //품목변경을 진행할 때, Sample Order에서 Line No. 가 진행되도록 blanket order 처리는 Blanket Order No. 처리하고, Line 부분은 스킵..
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", 'OnBeforeValidateBlanketOrderLineNo', '', false, false)]
+    local procedure OnBeforeValidateBlanketOrderLineNo(var IsHandled: Boolean)
+    begin
+        IsHandled := true;
+    end;
     //샘플요청서의 경우, 관련 주문서가 처리될 때, Blanket 으로 처리하되, Sample 관련문서로 처리되도록 이벤트를 선처리후,
     //샘플의 경우, 처리되면, 이후 Blanket 관련 프로세스는 건너뛰도록 isHandled -> True 처리함.
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnBeforeUpdateBlanketOrderLine', '', false, false)]

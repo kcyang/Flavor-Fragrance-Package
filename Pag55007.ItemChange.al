@@ -84,11 +84,9 @@ page 55007 "Item Change"
         SalesLineWork.VALIDATE("Unit Cost (LCY)", SalesLine."Unit Cost (LCY)");
         SalesLineWork.VALIDATE(Application, SalesLine.Application);
         SalesLineWork.VALIDATE(Direction, SalesLine.Direction);
-        //TODO SalesLine 에 Blanket Order No. 관련처리하는 이벤트에서 Sample 인경우, 처리할 것.
-        /*
-        SalesLineWork.VALIDATE("Blanket Order No.",SalesLine."Blanket Order No.");
-        SalesLineWork.Validate("Blanket Order Line No.",SalesLine."Blanket Order Line No.");
-        */
+        SalesLineWork."Blanket Order No." := SalesLine."Blanket Order No.";
+        SalesLineWork."Blanket Order Line No." := SalesLine."Blanket Order Line No.";
+
 /*
         //TODO 나중에, Sales Line에 Note,Type 추가 후 추가할 것.
         IF LPRE_SalesLine.B_Note <> '' THEN
