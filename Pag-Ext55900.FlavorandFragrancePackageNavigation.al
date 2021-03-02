@@ -45,13 +45,23 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
                     ApplicationArea = All;
                     ToolTip = '패키지에서 사용하는 코드를 관리합니다.';
                 }  
-                action(FormulaManage)
+                group(MasterManage)
                 {
-                    CaptionML = ENU='Formula Manage',KOR='처방 관리';
-                    RunObject = page "Formula Manage";
-                    ApplicationArea = All;
-                    ToolTipML = KOR='처방을 관리합니다. 자료업데이트/워험물,시뮬레이션등을 진행할 수 있습니다.';
-                }      
+                    action(FormulaManage)
+                    {
+                        CaptionML = ENU='Formula Manage',KOR='처방 관리';
+                        RunObject = page "Formula Manage";
+                        ApplicationArea = All;
+                        ToolTipML = KOR='처방을 관리합니다. 자료업데이트/워험물,시뮬레이션등을 진행할 수 있습니다.';
+                    }      
+                    action(PackingUnit)
+                    {
+                        CaptionML = ENU='Packing Unit',KOR='포장단위 관리';
+                        RunObject = page "Packing Unit";
+                        ApplicationArea = All;
+                        ToolTipML = KOR='포장단위를 관리합니다.';
+                    }      
+                }
                 group(Session)
                 {
                     Caption = 'Session Manage';
