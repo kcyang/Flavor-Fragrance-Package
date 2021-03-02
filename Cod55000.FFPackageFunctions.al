@@ -69,6 +69,7 @@ codeunit 55000 "FF Package Functions"
     end;
     //샘플요청서의 경우, 관련 주문서가 처리될 때, Blanket 으로 처리하되, Sample 관련문서로 처리되도록 이벤트를 선처리후,
     //샘플의 경우, 처리되면, 이후 Blanket 관련 프로세스는 건너뛰도록 isHandled -> True 처리함.
+    //FIXME 오더에서 품목변경 후, 업데이트 할 때 품번은 상관없이 오더번호에 라인번호로 진행할 수 있도록 처리해야 함. 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnBeforeUpdateBlanketOrderLine', '', false, false)]
     local procedure OnBeforeUpdateBlanketOrderLine(SalesLine: Record "Sales Line"; Ship: Boolean; Receive: Boolean; Invoice: Boolean; var IsHandled: Boolean)
     var

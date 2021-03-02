@@ -1,5 +1,23 @@
 pageextension 55002 "Sales Order Subform Ext." extends "Sales Order Subform"
 {
+    layout
+    {
+        addafter("No.")
+        {
+            field(ItemDescription;ItemDescription)
+            {
+                ApplicationArea = All;
+                Editable = false;
+            }
+        }
+        addafter("Description")
+        {
+            field("Description 2";"Description 2")
+            {
+                ApplicationArea = All;
+            }
+        }
+    }
     actions
     {
         addfirst(processing)
@@ -66,4 +84,53 @@ pageextension 55002 "Sales Order Subform Ext." extends "Sales Order Subform"
             }
         }
     }
+
+    trigger OnAfterGetCurrRecord()
+    begin
+        setItemDescription();
+    end;
+        
+    trigger OnAfterGetRecord()
+    begin
+        setItemDescription();
+    end;
+
+    trigger OnModifyRecord(): Boolean
+    begin
+        if Rec."No." <> xRec."No." then
+            setItemDescription();
+    end;
+
+    //FIXME Item Reference 를 넣은 후에는, 바로 안바뀜..?
+    local procedure setItemDescription()
+    var
+        Item: Record Item;
+    begin
+        //ItemDescription := '';        
+        if (Rec.Type = Rec.Type::Item) AND (Rec."No." <> '') then
+        begin
+            Item.Reset();
+            if Item.Get(Rec."No.") then
+                ItemDescription := Item.Description;
+        end else 
+            ItemDescription := '';
+    end;
+
+ 
+/*    
+    trigger OnModifyRecord(): Boolean
+    var 
+        Item: Record Item;
+    begin
+        ItemDescription := '';        
+        if (Rec.Type = Rec.Type::Item) AND (Rec."No." <> '') then
+        begin
+            if Item.Get(Rec."No.") then
+                ItemDescription := Item.Description;
+        end else 
+            ItemDescription := '';
+    end;
+*/
+    var 
+        ItemDescription: Text[100];
 }
