@@ -34,6 +34,30 @@ table 55002 "Packing Information"
             CaptionML = ENU='Packing Unit',KOR='용기종류';
             DataClassification = CustomerContent;
             TableRelation = "Packing Unit".Code WHERE (Block=CONST(false));
+            trigger OnValidate()
+            var
+                PackingUnit: Record "Packing Unit";
+            begin
+                IF "Packing Unit" <> '' THEN BEGIN
+                    PackingUnit.RESET;
+                    IF PackingUnit.GET("Packing Unit") THEN BEGIN
+                        "Packing Unit Weight" := PackingUnit.Weight;
+                        "Packing Capacity" := PackingUnit.Capacity;
+                        Type := PackingUnit.Type;
+                    END ELSE BEGIN
+                        "Packing Unit Weight" := 0;
+                        "Packing Capacity" := 0;
+                        Type := '';
+                    END;
+                END ELSE BEGIN
+                    "Packing Unit Weight" := 0;
+                    "Packing Capacity" := 0;
+                    Type := '';
+                END;
+
+                CalcNetWeight;
+                CalcGrossWeight;                
+            end;
         }
         field(6; "Packing Unit Weight"; Decimal)
         {
@@ -45,11 +69,20 @@ table 55002 "Packing Information"
         {
             CaptionML = ENU='Unit Qty.',KOR='용기개수';
             DataClassification = CustomerContent;
+            trigger OnValidate()
+            begin
+                CalcNetWeight();
+                CalcGrossWeight();
+            end;
         }
         field(8; "Net Weight"; Decimal)
         {
             CaptionML = ENU='Net Weight',KOR='순 중량';
             DataClassification = CustomerContent;
+            trigger OnValidate()
+            begin
+                CalcGrossWeight();
+            end;
         }
         field(9; "Gross Weight"; Decimal)
         {
@@ -61,6 +94,11 @@ table 55002 "Packing Information"
         {
             CaptionML = ENU='Packing Capacity',KOR='용기용량';
             DataClassification = CustomerContent;
+            trigger OnValidate()
+            begin
+                CalcNetWeight();
+                CalcGrossWeight();
+            end;
         }
         field(11; "Posted Document No."; Code[20])
         {
@@ -86,5 +124,24 @@ table 55002 "Packing Information"
             Clustered = true;
         }
     }
-    
+    procedure CalcGrossWeight()
+    begin
+        IF ("Packing Unit Weight" = 0) OR ( "Unit Qty." = 0) THEN
+            "Gross Weight" := "Net Weight"
+        ELSE
+            "Gross Weight" := "Net Weight" + ("Packing Unit Weight" * "Unit Qty.");
+    end;    
+
+    procedure CalcNetWeight()
+    begin
+        IF "Packing Unit" <> '' THEN BEGIN
+            IF "Packing Capacity" <> 0 THEN BEGIN
+                "Net Weight" := "Packing Capacity" * "Unit Qty.";
+            END ELSE BEGIN
+                "Net Weight" := 0;
+            END;
+        END ELSE BEGIN
+            "Net Weight" := 0;
+        END;
+    end;
 }
