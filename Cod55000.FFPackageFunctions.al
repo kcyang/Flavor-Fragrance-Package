@@ -6,18 +6,65 @@ codeunit 55000 "FF Package Functions"
     //Sales Posting 이 마무리된 후에, 처리할 것들을 처리함.
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', false, false)]
     local procedure OnAfterPostSalesDoc(var SalesHeader: Record "Sales Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean; InvtPickPutaway: Boolean; var CustLedgerEntry: Record "Cust. Ledger Entry"; WhseShip: Boolean; WhseReceiv: Boolean)
+    var
+        packingInformation: Record "Packing Information";
+        SalesShptLine: Record "Sales Shipment Line";
     begin
-        //code to somthing
-        //Shipment Line 을 가져와서,
-        //Packing Information 에 넣어주기.
+        if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then 
+        begin
+            //code to somthing
+            //Shipment Line 을 가져와서,
+            //Packing Information 에 넣어주기.
+            packingInformation.Reset();
+            packingInformation.SetRange("Document Type",packingInformation."Document Type"::Sale);
+            packingInformation.SetRange("Document No.",SalesHeader."No.");
+            if packingInformation.FindSet() then
+            begin
+                repeat
+                    SalesShptLine.Reset();
+                    SalesShptLine.SetRange("Document No.",SalesShptHdrNo);
+                    SalesShptLine.SetFilter("Order Line No.",'%1',packingInformation."Document Line No.");
+                    if SalesShptLine.Find('-') then
+                    begin
+                        packingInformation."Posted Document No." := SalesShptHdrNo;
+                        packingInformation."Posted Document Line No." := SalesShptLine."Line No.";
+                        packingInformation.Modify();
+                    end;
+                until packingInformation.Next() = 0;
+            end;
+        end;
+
     end;
     //Purchase Posting 이 마무리 된 후에, 처리할 것들을 처리함.
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-post", 'OnAfterPostPurchaseDoc', '', false, false)]
     local procedure OnAfterPostPurchaseDoc(var PurchaseHeader: Record "Purchase Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; PurchRcpHdrNo: Code[20]; RetShptHdrNo: Code[20]; PurchInvHdrNo: Code[20]; PurchCrMemoHdrNo: Code[20]; CommitIsSupressed: Boolean)
+    var   
+        packingInformation: Record "Packing Information";
+        PurchRcptLine: Record "Purch. Rcpt. Line";    
     begin
-        //code to somthing
-        //Recpt. Line 을 가져와서,
-        //Packing Information 에 넣어주기.        
+        if PurchaseHeader."Document Type" = PurchaseHeader."Document Type"::Order then 
+        begin
+            //code to somthing
+            //Recpt. Line 을 가져와서,
+            //Packing Information 에 넣어주기.        
+            packingInformation.Reset();
+            packingInformation.SetRange("Document Type",packingInformation."Document Type"::Purchase);
+            packingInformation.SetRange("Document No.",PurchaseHeader."No.");
+            if packingInformation.FindSet() then
+            begin
+                repeat
+                    PurchRcptLine.Reset();
+                    PurchRcptLine.SetRange("Document No.",PurchRcpHdrNo);
+                    PurchRcptLine.SetFilter("Order Line No.",'%1',packingInformation."Document Line No.");
+                    if PurchRcptLine.Find('-') then
+                    begin
+                        packingInformation."Posted Document No." := PurchRcpHdrNo;
+                        packingInformation."Posted Document Line No." := PurchRcptLine."Line No.";
+                        packingInformation.Modify();
+                    end;
+                until packingInformation.Next() = 0;
+            end;   
+        end;
     end;
     // Sales Header 테이블에서, No Series 초기화하고, 가져갈 때,
     // 새로 추가된 Sample Request Nos 번호를 가져가도록 처리함.
