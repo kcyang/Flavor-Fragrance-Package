@@ -1,7 +1,7 @@
-page 55011 "Sales Packing Sub"
+page 55011 "Packing Sub"
 {
     
-    CaptionML = ENU='Sales Packing Sub',KOR='매출 용기 정보';
+    CaptionML = ENU='Packing Sub',KOR='용기 정보';
     PageType = ListPart;
     AutoSplitKey = true;
     SourceTable = "Packing Information";

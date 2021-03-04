@@ -1,9 +1,9 @@
-page 55010 "Sales Packing List"
+page 55012 "Purchase Packing List"
 {
     
-    CaptionML = ENU='Sales Packing List',KOR='매출용기목록'; 
+    CaptionML = ENU='Purchase Packing List',KOR='매출용기목록'; 
     PageType = List;
-    SourceTable = "Sales Line";
+    SourceTable = "Purchase Line";
     SourceTableView = SORTING("Document Type","Document No.","Line No.") ORDER(Ascending) WHERE(Type=FILTER(Item));
     InsertAllowed = false;
     DeleteAllowed = false;
@@ -68,7 +68,7 @@ page 55010 "Sales Packing List"
             part(SalesPacking; "Packing Sub")
             {
                 ApplicationArea = All;
-                SubPageLink = "Document Type"=const(Sale),"Document No."=FIELD("Document No."),"Document Line No."=FIELD("Line No.");
+                SubPageLink = "Document Type"=const(Purchase),"Document No."=FIELD("Document No."),"Document Line No."=FIELD("Line No.");
                 UpdatePropagation = Both;
             }
         }
@@ -81,7 +81,7 @@ page 55010 "Sales Packing List"
         LineTotalNetWeight := 0;
         //순중량,총중량 계산해서 넣기.
         PackingInfo.Reset();
-        PackingInfo.SetRange("Document Type",PackingInfo."Document Type"::Sale);
+        PackingInfo.SetRange("Document Type",PackingInfo."Document Type"::Purchase);
         PackingInfo.SetRange("Document No.",Rec."Document No.");
         PackingInfo.SetRange("Document Line No.",Rec."Line No.");
         if PackingInfo.FindSet() then

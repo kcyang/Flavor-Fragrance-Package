@@ -3,6 +3,22 @@
 /// </summary>
 codeunit 55000 "FF Package Functions"
 {
+    //Sales Posting 이 마무리된 후에, 처리할 것들을 처리함.
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', false, false)]
+    local procedure OnAfterPostSalesDoc(var SalesHeader: Record "Sales Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean; InvtPickPutaway: Boolean; var CustLedgerEntry: Record "Cust. Ledger Entry"; WhseShip: Boolean; WhseReceiv: Boolean)
+    begin
+        //code to somthing
+        //Shipment Line 을 가져와서,
+        //Packing Information 에 넣어주기.
+    end;
+    //Purchase Posting 이 마무리 된 후에, 처리할 것들을 처리함.
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-post", 'OnAfterPostPurchaseDoc', '', false, false)]
+    local procedure OnAfterPostPurchaseDoc(var PurchaseHeader: Record "Purchase Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; PurchRcpHdrNo: Code[20]; RetShptHdrNo: Code[20]; PurchInvHdrNo: Code[20]; PurchCrMemoHdrNo: Code[20]; CommitIsSupressed: Boolean)
+    begin
+        //code to somthing
+        //Recpt. Line 을 가져와서,
+        //Packing Information 에 넣어주기.        
+    end;
     // Sales Header 테이블에서, No Series 초기화하고, 가져갈 때,
     // 새로 추가된 Sample Request Nos 번호를 가져가도록 처리함.
     [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterGetNoSeriesCode', '', false, false)]
