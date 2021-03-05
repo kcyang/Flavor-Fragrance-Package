@@ -168,10 +168,8 @@ page 55008 "Formula Manage"
                 CaptionML = ENU='BOM',KOR='BOM';
                 ApplicationArea = All;
                 Image = BOM;
-                trigger OnAction()
-                begin
-                    Message('🚽기능 업데이트 중입니다!🚬');
-                end;
+                RunObject = page "Production BOM";
+                RunPageLink = "No." = field("No.");
             }
             action(Guide)
             {
