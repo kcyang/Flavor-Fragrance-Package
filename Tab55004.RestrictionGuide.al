@@ -20,7 +20,7 @@ table 55004 "Restriction Guide"
             CaptionML = ENU='CAS',KOR='CAS';
             DataClassification = CustomerContent;
         }
-        field(4; "Account Type";Enum "Gen. Journal Account Type")
+        field(4; "Account Type";Enum "Gen. Journal Source Type")
         {
             CaptionML = ENU='Account Type',KOR='업체유형';
             DataClassification = CustomerContent;
