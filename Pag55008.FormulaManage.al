@@ -177,8 +177,15 @@ page 55008 "Formula Manage"
                 ApplicationArea = All;
                 Image = Documents;
                 trigger OnAction()
+                var
+                    RestrictionGuide: Page "Restriction Guide";
+                    ProductionBOM: Record "Production BOM Line";
                 begin
-                    Message('🚽기능 업데이트 중입니다!🚬');
+                    //Message('🚽기능 업데이트 중입니다!🚬');
+                    ProductionBOM.Reset();
+                    ProductionBOM.SetRange("Production BOM No.",Rec."No.");
+                    RestrictionGuide.SetTableView(ProductionBOM);
+                    RestrictionGuide.RunModal();
                 end;
             }
             action(EditGuide)
