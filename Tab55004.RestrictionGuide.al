@@ -8,6 +8,7 @@ table 55004 "Restriction Guide"
         field(1; "Item No."; Code[20])
         {
             CaptionML = ENU='Item No.',KOR='품목 번호';
+            TableRelation = Item;
             DataClassification = CustomerContent;
         }
         field(2; Description; Text[250])

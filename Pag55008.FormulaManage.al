@@ -193,10 +193,7 @@ page 55008 "Formula Manage"
                 CaptionML = ENU='Edit Guide',KOR='가이드 수정';
                 ApplicationArea = All;
                 Image = EditAttachment;
-                trigger OnAction()
-                begin
-                    Message('🚽기능 업데이트 중입니다!🚬');
-                end;
+                RunObject = page "Restriction Guide Edit";
             }
         }
         area(Navigation)

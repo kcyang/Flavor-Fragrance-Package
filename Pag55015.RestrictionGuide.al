@@ -76,6 +76,7 @@ page 55015 "Restriction Guide"
 
         restriction.Reset();
         restriction.SetRange("Item No.",Rec."No.");
+        
         if restriction.FindSet() then
         begin
             repeat
@@ -90,6 +91,7 @@ page 55015 "Restriction Guide"
             until restriction.Next() = 0;
         end;
     end;
+
     var
         ProhibitAccount: Text;
         ProhibitYN: Boolean;
