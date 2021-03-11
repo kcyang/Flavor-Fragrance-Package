@@ -247,8 +247,15 @@ page 55008 "Formula Manage"
                 ApplicationArea = All;
                 Image = PrintAcknowledgement;
                 trigger OnAction()
+                var
+                    ProductionBOM: Record "Production BOM Header";
+                    SimulationRpt: Report Simulation;
                 begin
-                    Message('🚽기능 업데이트 중입니다!🚬');
+                    //Message('🚽기능 업데이트 중입니다!🚬');
+                    ProductionBOM.Reset();
+                    ProductionBOM.SetRange("No.","No.");
+                    SimulationRpt.SetTableView(ProductionBOM);
+                    SimulationRpt.RunModal();
                 end;
             }
             action(PurchSimulation)
