@@ -20,4 +20,11 @@ tableextension 55012 "Purchase Header Ext" extends "Purchase Header"
         }
 
     }
+    keys
+    {
+        key(BL;"BL No.")
+        {
+            
+        }
+    }
 }
