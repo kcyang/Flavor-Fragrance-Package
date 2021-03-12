@@ -13,6 +13,7 @@ table 55005 "Bill of Landing"
         field(2; "Vendor No."; Code[20])
         {
             CaptionML = ENU='Vendor No.',KOR='매입처 번호';
+            TableRelation = Vendor;
             DataClassification = CustomerContent;
         }
         field(3; "Vendor Name"; Text[250])
@@ -39,21 +40,32 @@ table 55005 "Bill of Landing"
         field(7; "Currency Code"; Code[20])
         {
             CaptionML = ENU='Currency Code',KOR='통화코드';
+            TableRelation = Currency;
             DataClassification = CustomerContent;
         }
         field(8; "Currency Exch. Rates"; Decimal)
         {
             CaptionML = ENU='Currency Exch. Rates',KOR='면장 환율';
             DataClassification = CustomerContent;
+            trigger OnValidate()
+            begin
+                "Amount (LCY)" := "Amount (FCY)" * "Currency Exch. Rates";
+            end;
         }
         field(9; "Amount (FCY)"; Decimal)
         {
             CaptionML = ENU='Amount (FCY)',KOR='금액(외화)';
+            AutoFormatExpression = "Currency Code";
             DataClassification = CustomerContent;
+            trigger OnValidate()
+            begin
+                "Amount (LCY)" := "Amount (FCY)" * "Currency Exch. Rates";
+            end;            
         }
         field(10; "Amount (LCY)"; Decimal)
         {
             CaptionML = ENU='Amount (LCY)',KOR='금액(원화)';
+            DecimalPlaces = 1;
             DataClassification = CustomerContent;
         }
         field(11; "Import Reference Date"; Date)
@@ -89,6 +101,13 @@ table 55005 "Bill of Landing"
         key(PK; "BL No.")
         {
             Clustered = true;
+        }
+    }
+    fieldgroups
+    {
+        fieldgroup(DropDown;"BL No.","Vendor No.","Vendor Name","BL Date","Ship Date")
+        {
+
         }
     }
     
