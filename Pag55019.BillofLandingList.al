@@ -127,6 +127,29 @@ page 55019 "Bill of Landing List"
 
             }
         }
+        area(Reporting)
+        {
+            action(ImportCostStatement)
+            {
+                ApplicationArea = All;
+                CaptionML = ENU = 'Import Cost Statement', KOR = '수입원가정산서';
+                Image = "Invoicing-MDL-Invoice";
+                Promoted = true;
+                PromotedCategory = Report;
+                ToolTip = 'B/L 에 해당하는 수입원가정산서를 보여줍니다.';
+                trigger OnAction()
+                var
+                    BL: Record "Bill of Landing";
+                    ImportCostRpt: Report "Import Cost Statement";
+                begin
+                    BL.Reset();
+                    BL.SetRange("BL No.",Rec."BL No.");
+                    ImportCostRpt.SetTableView(BL);
+                    ImportCostRpt.RunModal();
+                    //Report.RunModal(Report::"Import Cost Statement",true,false,BL);
+                end;
+            }
+        }
     }
     
 }

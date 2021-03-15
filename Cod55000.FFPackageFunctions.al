@@ -368,5 +368,21 @@ codeunit 55000 "FF Package Functions"
         if not SkipMessage then
             Message(OrderCreatedMsg, SalesOrderHeader."No.", Rec."No.");
     end;
+    procedure BlankZero(Number: Decimal): Text
+    begin
+        if Number <> 0 then
+            exit(Format(Number,0,'<Sign><Integer Thousand><Decimals>'))
+        else
+            exit('');
+    end;
 
+    procedure BlankZeroFormatted(NumberFormatted: Text) : Text
+    var 
+        Number: Integer;
+    begin
+        if Evaluate(Number,NumberFormatted) AND (Number = 0) then
+            exit('')
+        else
+            exit(NumberFormatted);
+    end;
 }
