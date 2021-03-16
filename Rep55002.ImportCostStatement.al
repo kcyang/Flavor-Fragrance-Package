@@ -123,6 +123,8 @@ report 55002 "Import Cost Statement"
             column(CurrencyCode;CurrencyCode){}
             column(CurrencyExchRate;CurrencyExchRate){}
             column(AmountFCY;AmountFCY){}
+            column(DocumentList;DocumentList){}
+            column(GrandTotal;DocMgt.BlankZero(PurchAmt+PurchChargeAmt)){}
 
             trigger OnAfterGetRecord()
             var
@@ -144,6 +146,7 @@ report 55002 "Import Cost Statement"
                 Clear(ArrayofRate);
                 Clear(ItemCharge);
                 Clear(ArrayofDescription);
+                Clear(DocumentList);
 
                 ItemCharge.Reset();
                 for ForCount := 1 to 20 do
@@ -189,6 +192,8 @@ report 55002 "Import Cost Statement"
                                         if ValueEntry."Item Charge No." = '' then
                                         begin
                                             PurchAmt += ValueEntry."Cost Amount (Actual)";
+                                            DocumentList += ValueEntry."Document No.";
+                                            DocumentList += ' ';
                                             VendorLedger.Reset();
                                             VendorLedger.SetRange("Document No.",ValueEntry."Document No.");
                                             VendorLedger.SetFilter("Currency Code",'<>%1','');
@@ -261,4 +266,5 @@ report 55002 "Import Cost Statement"
         ItemCharge: Record "Item Charge";
         ArrayofDescription: array[20] of Text;
         DocMgt: Codeunit "FF Package Functions";
+        DocumentList: Text;
 }
