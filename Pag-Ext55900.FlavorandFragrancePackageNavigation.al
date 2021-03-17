@@ -78,6 +78,18 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
                         ApplicationArea = All;
                         ToolTipML = KOR = '포장단위를 관리합니다.';
                     }
+                }
+                group(QualityControl)
+                {
+                    CaptionML = ENU='Quality Control',KOR='Quality Control';
+                    action(QCSpec)
+                    {
+                        CaptionML = ENU = 'QC Specification.', KOR = 'QC 사양정의';
+                        RunObject = page "QC Specification List";
+                        ApplicationArea = All;
+                        ToolTipML = KOR = 'QC 사양 관련목록입니다.';
+                    }
+
                     action(QC)
                     {
                         CaptionML = ENU = 'QC Config.', KOR = 'QC 설정';
@@ -85,6 +97,7 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
                         ApplicationArea = All;
                         ToolTipML = KOR = 'QC 관련 설정입니다.';
                     }
+
                 }
                 group(Session)
                 {

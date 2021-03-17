@@ -16,6 +16,10 @@ page 55020 "Quality Control Config"
                 {
                     ApplicationArea = All;
                 }
+                field("Default QC Spec. No. Series";"Default QC Spec. No. Series")
+                {
+                    ApplicationArea = All;
+                }
                 field("QC Requirements"; Rec."QC Requirements")
                 {
                     ApplicationArea = All;
@@ -52,6 +56,16 @@ page 55020 "Quality Control Config"
                 ToolTip = 'QC 측정방법을 입력합니다.';
                 RunObject = page "QC Methods";
             }
+            action(QCRequirements)
+            {
+                ApplicationArea = All;
+                CaptionML = ENU = 'QC Requirements', KOR = 'QC 필수항목';
+                Image = QualificationOverview;
+                Promoted = true;
+                PromotedCategory = Process;
+                ToolTip = 'QC 필수항목을 정의합니다.';
+                RunObject = page "QC Requirements";
+            }            
         }
     }
     

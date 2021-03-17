@@ -77,5 +77,10 @@ tableextension 55010 "Item Ext." extends Item
             CaptionML = ENU='LineColor',KOR='열색지정';
             DataClassification = ToBeClassified;
         }
+        field(55100; "Quality Specifications"; Boolean)
+        {
+            CaptionML = ENU='Quality Specifications',KOR='QC사양보유';
+            DataClassification = ToBeClassified;
+        }
     }
 }

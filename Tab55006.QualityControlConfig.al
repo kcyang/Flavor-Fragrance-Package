@@ -27,6 +27,12 @@ table 55006 "Quality Control Config"
             DataClassification = CustomerContent;
             TableRelation = Location;
         }
+        field(5; "Default QC Spec. No. Series"; Code[20])
+        {
+            CaptionML = ENU='Default QC Spec. No. Series',KOR='QC 사양번호시리즈';
+            DataClassification = CustomerContent;
+            TableRelation = "No. Series";
+        }        
     }
     keys
     {
