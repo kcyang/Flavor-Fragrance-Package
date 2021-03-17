@@ -1,3 +1,6 @@
+/// <summary>
+/// QC 사양의 상태값을 정의합니다.
+/// </summary>
 enum 55004 "Quality Control Specification Status"
 {
     Extensible = true;

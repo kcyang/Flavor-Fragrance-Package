@@ -7,7 +7,7 @@ tableextension 55016 "Item Ledger Entry Ext" extends "Item Ledger Entry"
             Caption = 'QC Required';
             DataClassification = ToBeClassified;
         }
-        field(55101; "QC Compliance"; Code[10])
+        field(55101; "QC Compliance"; Enum "Quality Control Compliance")
         {
             Caption = 'QC Compliance';
             DataClassification = ToBeClassified;

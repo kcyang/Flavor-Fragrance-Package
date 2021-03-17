@@ -12,7 +12,7 @@ tableextension 55017 "Entry Summary Ext" extends "Entry Summary"
             Caption = 'QC Test Exists';
             DataClassification = ToBeClassified;
         }
-        field(55102; "QC Compliance"; Code[10])
+        field(55102; "QC Compliance"; Enum "Quality Control Compliance")
         {
             Caption = 'QC Compliance';
             DataClassification = ToBeClassified;

@@ -3,6 +3,18 @@
 /// </summary>
 codeunit 55000 "FF Package Functions"
 {
+    //QC Required 항목을 Purchase Line 에 입력하기 위함.
+    //Item 값이 입력된 후에, 입력됨.
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Line", 'OnAfterAssignItemValues', '', false,false)]
+    local procedure OnAfterAssignItemValues(var PurchLine: Record "Purchase Line"; Item: Record Item; CurrentFieldNo: Integer)
+    var
+        QCRequired: Record "Quality Control Requirements";
+    begin
+        QCRequired.Reset();
+        QCRequired.SetRange("Item No.",Item."No.");
+        if QCRequired.Find('-') then
+            PurchLine."QC Required" := QCRequired."Quality Testing Required";
+    end;
     //Sales Posting 이 마무리된 후에, 처리할 것들을 처리함.
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', false, false)]
     local procedure OnAfterPostSalesDoc(var SalesHeader: Record "Sales Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean; InvtPickPutaway: Boolean; var CustLedgerEntry: Record "Cust. Ledger Entry"; WhseShip: Boolean; WhseReceiv: Boolean)
@@ -41,6 +53,7 @@ codeunit 55000 "FF Package Functions"
     var   
         packingInformation: Record "Packing Information";
         PurchRcptLine: Record "Purch. Rcpt. Line";    
+        ItemLedgerEntry: Record "Item Ledger Entry";
     begin
         if PurchaseHeader."Document Type" = PurchaseHeader."Document Type"::Order then 
         begin
@@ -64,6 +77,31 @@ codeunit 55000 "FF Package Functions"
                     end;
                 until packingInformation.Next() = 0;
             end;   
+
+
+            //QC Required 가 있는 경우, item ledger entry 에 QC Required 입력.
+            PurchRcptLine.Reset();
+            PurchRcptLine.SetRange("Document No.",PurchRcpHdrNo);
+            PurchRcptLine.SetFilter(Type,'%1',PurchRcptLine.Type::Item);
+            
+            if PurchRcptLine.FindSet() then
+            begin
+                repeat
+                    ItemLedgerEntry.Reset();
+                    ItemLedgerEntry.SetCurrentKey("Document No.", "Document Type", "Document Line No.");
+                    ItemLedgerEntry.SetRange("Document No.",PurchRcpHdrNo);
+                    ItemLedgerEntry.SetRange("Document Type",ItemLedgerEntry."Document Type"::"Purchase Receipt");
+                    ItemLedgerEntry.SetRange("Document Line No.",PurchRcptLine."Line No.");
+                    ItemLedgerEntry.SetFilter("Item No.",PurchRcptLine."No.");
+                    if ItemLedgerEntry.FindSet() then
+                    begin
+                        repeat
+                            ItemLedgerEntry."QC Required" := PurchRcptLine."QC Required";
+                            ItemLedgerEntry.Modify();
+                        until ItemLedgerEntry.Next() = 0;
+                    end;
+                until PurchRcptLine.Next() = 0;
+            end;
         end;
     end;
     // Sales Header 테이블에서, No Series 초기화하고, 가져갈 때,

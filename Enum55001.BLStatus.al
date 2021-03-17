@@ -1,3 +1,6 @@
+/// <summary>
+/// B/L 상태 값
+/// </summary>
 enum 55001 "BL Status"
 {
     Extensible = true;
