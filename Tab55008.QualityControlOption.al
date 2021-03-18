@@ -33,7 +33,7 @@ table 55008 "Quality Control Option"
     }
     keys
     {
-        key(PK; "Measure Code","Entry No.")
+        key(PK; "Measure Code","Entry No.","Option Code")
         {
             Clustered = true;
         }

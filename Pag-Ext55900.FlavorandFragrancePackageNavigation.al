@@ -9,20 +9,20 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
         {
             group("FF")
             {
-                CaptionML = ENU = 'F&F', KOR = '향료패키지';
+                CaptionML = ENU = 'F&F', KOR = '🧴 향료패키지';
                 group(Sample)
                 {
-                    CaptionML = ENU = 'Sample', KOR = '샘플관리';
+                    CaptionML = ENU = 'Sample', KOR = '🔬 샘플관리';
                     action("Sample Request")
                     {
-                        CaptionML = ENU = 'Sales Sample Request', KOR = '샘플 요청';
+                        CaptionML = ENU = 'Sales Sample Request', KOR = '🔬샘플 요청';
                         RunObject = page "Sales Sample Requsts List";
                         ApplicationArea = All;
                         ToolTip = '고객의 향료샘플 요청을 처리합니다.';
                     }
                     action("Sample Order")
                     {
-                        CaptionML = ENU = 'Sample Order', KOR = '샘플 주문';
+                        CaptionML = ENU = 'Sample Order', KOR = '🧺 샘플 주문';
                         RunObject = page "Sales Sample Order List";
                         ApplicationArea = All;
                         ToolTip = '샘플요청에서 생성된 샘플주문목록입니다.';
@@ -44,10 +44,10 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
                 }
                 group(Purchase)
                 {
-                    CaptionML = ENU = 'Purchase', KOR='구매';
+                    CaptionML = ENU = 'Purchase', KOR='📦 구매';
                     action("Bill of Landing List")
                     {
-                        CaptionML = ENU = 'B/L List', KOR = 'B/L 목록';
+                        CaptionML = ENU = 'B/L List', KOR = '🗂 B/L 목록';
                         RunObject = page "Bill of Landing List";
                         ApplicationArea = All;
                         ToolTip = 'B/L 목록을 확인하고 관리할 수 있습니다.';
@@ -55,7 +55,7 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
                 }
                 group(MasterManage)
                 {
-                    CaptionML = ENU = 'Master Management', KOR = '마스터 관리';
+                    CaptionML = ENU = 'Master Management', KOR = '🏗 마스터 관리';
                     action("FF Code")
                     {
                         CaptionML = ENU = 'Package Code Management', KOR = '코드 관리';
@@ -66,7 +66,7 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
 
                     action(FormulaManage)
                     {
-                        CaptionML = ENU = 'Formula Manage', KOR = '처방 관리';
+                        CaptionML = ENU = 'Formula Manage', KOR = '📖 처방 관리';
                         RunObject = page "Formula Manage";
                         ApplicationArea = All;
                         ToolTipML = KOR = '처방을 관리합니다. 자료업데이트/워험물,시뮬레이션등을 진행할 수 있습니다.';
@@ -81,10 +81,17 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
                 }
                 group(QualityControl)
                 {
-                    CaptionML = ENU='Quality Control',KOR='Quality Control';
+                    CaptionML = ENU='Quality Control',KOR='🏭 품질관리';
+                    action(QCTest)
+                    {
+                        CaptionML = ENU = 'Quality Testing', KOR = '📐품질테스트';
+                        RunObject = page "Quality Test List";
+                        ApplicationArea = All;
+                        ToolTipML = KOR = 'QC 테스트 목록입니다.';
+                    }
                     action(QCSpec)
                     {
-                        CaptionML = ENU = 'QC Specification.', KOR = 'QC 사양정의';
+                        CaptionML = ENU = 'QC Specification.', KOR = '🏷 QC 사양정의';
                         RunObject = page "QC Specification List";
                         ApplicationArea = All;
                         ToolTipML = KOR = 'QC 사양 관련목록입니다.';
@@ -101,7 +108,7 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
                 }
                 group(Session)
                 {
-                    Caption = 'Session Manage';
+                    Caption = '🚑 Session Manage';
                     action("ActiveSession")
                     {
                         CaptionML = ENU = 'Active Session', KOR = '살아있는 세션';
