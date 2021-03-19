@@ -107,6 +107,7 @@ table 55013 "Quality Test Line"
                 if xRec."Actual Measure" <> Rec."Actual Measure" then
                 begin
                     Rec."Test Completion" := true;
+                    Rec."Test Date" := Today;
                     Modify()
                 end;
                 MeasuretheValue();
@@ -122,6 +123,7 @@ table 55013 "Quality Test Line"
                 if xRec.Result <> Rec.Result then
                 begin
                     Rec."Test Completion" := true;
+                    Rec."Test Date" := Today;
                     Modify();
                 end;
                 MeasuretheValue();
@@ -129,17 +131,23 @@ table 55013 "Quality Test Line"
         }
         field(14; "Non Compliance"; Boolean)
         {
-            CaptionML = ENU='Non Compliance',KOR='미이행';
+            CaptionML = ENU='Non Compliance',KOR='부적합';
             DataClassification = CustomerContent;
         }
         field(15; Comments; Boolean)
         {
+            Editable = false;
             CaptionML = ENU='Comments',KOR='코멘트';
             DataClassification = CustomerContent;
         }
         field(16; "Test Completion"; Boolean)
         {
             CaptionML = ENU='Test Completion',KOR='테스트 완료';
+            DataClassification = CustomerContent;
+        }
+        field(17; "Test Date"; Date)
+        {
+            CaptionML = ENU='Test Date',KOR='테스트 일자';
             DataClassification = CustomerContent;
         }
     }
@@ -156,8 +164,34 @@ table 55013 "Quality Test Line"
     /// 값이 정상치에 해당하는지 여부를 기록합니다.
     /// </summary>
     local procedure MeasuretheValue()
+    var
+        QCOption: Record "Quality Control Option";
     begin
-
-    end;
-    
+        //Option 유형인 경우, Quality Control Option 에서 값을 처리함.
+        if "Result Type" = "Result Type"::QCOption then 
+        begin
+            if Result <> '' then
+            begin
+                QCOption.Reset();
+                QCOption.SetRange("Measure Code","Quality Measure");
+                QCOption.SetRange("Option Code",Result);
+                if QCOption.Find('-') then
+                begin
+                    if QCOption.Pass = false then
+                        "Non Compliance" := true
+                    else
+                        "Non Compliance" := false;
+                end else
+                    Error('입력된 결과 값이 QC 설정에 없는 값입니다. 먼저 설정에서 정의해 주세요.');
+            end;
+        end else 
+        begin
+            //번호인 경우, Min Max 로 확인하도록 함.
+            if ("Lower Limit" > "Actual Measure") OR
+            ("Upper Limit" < "Actual Measure") then
+                "Non Compliance" := true
+            else
+                "Non Compliance" := false;
+        end;
+    end;    
 }

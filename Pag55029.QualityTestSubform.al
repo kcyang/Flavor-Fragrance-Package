@@ -79,10 +79,12 @@ page 55029 "Quality Test Subform"
                 }
                 field("Non Compliance"; Rec."Non Compliance")
                 {
+                    Editable = false;
                     ApplicationArea = All;
                 }
                 field(Comments; Rec.Comments)
                 {
+                    Editable = false;
                     ApplicationArea = All;
                 }
             }

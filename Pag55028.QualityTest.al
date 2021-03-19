@@ -35,15 +35,18 @@ page 55028 "Quality Test"
                 }
                 field("Vendor No."; Rec."Vendor No.")
                 {
+                    Importance = Additional;
                     ApplicationArea = All;
                 }
                 field("Vendor Name"; Rec."Vendor Name")
                 {
+                    Importance = Additional;
                     ApplicationArea = All;
                 }
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
+                    Editable = false;
                 }
                 field("Lot_Serial No."; Rec."Lot_Serial No.")
                 {
@@ -68,6 +71,7 @@ page 55028 "Quality Test"
             }
             part(SpecLines; "Quality Test Subform")
             {
+                Editable = isEditable;
                 ApplicationArea = All;
                 SubPageLink = "Document No." = FIELD("No.");
                 UpdatePropagation = Both;
@@ -80,8 +84,10 @@ page 55028 "Quality Test"
         {
             action(GetSpec)
             {
+                Enabled = isEditable;
                 ApplicationArea = All;
-                CaptionML = ENU = '📏 Get QC Spec.', KOR = '📏 측정사양가져오기';
+                CaptionML = ENU = 'Get QC Spec.', KOR = '측정사양가져오기';
+                Image = UnitOfMeasure;
                 Promoted = true;
                 PromotedCategory = Process;
                 ToolTip = '테스트할 품목에 해당하는 QC 사양을 가져옵니다.';
@@ -131,6 +137,96 @@ page 55028 "Quality Test"
                     end;;
                 end;
             }
+            action(Certified)
+            {
+                ApplicationArea = All;
+                CaptionML = ENU = 'Complete', KOR = '테스트완료처리';
+                Image = CompleteLine;
+                Promoted = true;
+                PromotedCategory = Process;
+                ToolTip = '테스트를 완료처리합니다.';
+                trigger OnAction()
+                var
+                    QCTestLine: Record "Quality Test Line";
+                    ItemLedger: Record "Item Ledger Entry";
+                    isNonCompliance: Boolean;
+                begin
+                    isNonCompliance := false;
+                    if Rec.Status = Rec.Status::Certified then
+                        Error('이미 완료처리된 테스트를 다시 처리할 수 없습니다.\문서를 확인하세요.');
+                    
+                    //Line 점검.
+                    QCTestLine.Reset();
+                    QCTestLine.SetRange("Document No.",Rec."No.");
+                    if QCTestLine.FindSet() then
+                    begin
+                        repeat
+                            if QCTestLine."Test Completion" = false then
+                                Error('모든 라인이 테스트가 완료되어야 합니다.\%1 테스트에 대해서 진행을 먼저 해주세요.',QCTestLine."Quality Measure");
+                            if QCTestLine."Non Compliance" = true then
+                                isNonCompliance := true;
+                        until QCTestLine.Next() = 0;
+
+                        //Item Ledger 해당 라인에 업데이트(결과)
+                        ItemLedger.Reset();
+                        ItemLedger.SetRange("Entry No.",Rec."Test Item Ledger Entry No.");
+                        if ItemLedger.Find('-') then
+                        begin
+                            ItemLedger."QC Compliance" := ItemLedger."QC Compliance"::Yes;
+                            if isNonCompliance then
+                                ItemLedger."QC Non Compliance" := true;
+                            ItemLedger.Modify();
+                        end;
+                        Rec.Status := Rec.Status::Certified;
+                        isEditable := false;
+                        CurrPage.Update();
+                    end;
+
+                end;
+            }
+            action(ReOpen)
+            {
+                ApplicationArea = All;
+                CaptionML = ENU = 'Reopen', KOR = '다시열기';
+                Image = ReOpen;
+                Promoted = true;
+                PromotedCategory = Process;
+                ToolTip = '테스트를 다시 열어서 재확인합니다.';
+                trigger OnAction()
+                var
+                    ItemLedger: Record "Item Ledger Entry";
+                begin
+                    if Rec.Status <> Rec.Status::Certified then
+                        Error('다시열기 위해서는, 상태가 완료(Certified) 여야 합니다.');
+
+                    //Item Ledger 해당 라인에 업데이트(결과)
+                    ItemLedger.Reset();
+                    ItemLedger.SetRange("Entry No.",Rec."Test Item Ledger Entry No.");
+                    if ItemLedger.Find('-') then
+                    begin
+                        ItemLedger."QC Compliance" := "Quality Control Compliance".FromInteger(0);
+                        ItemLedger."QC Non Compliance" := false;
+                        ItemLedger.Modify();
+                    end;                    
+                    Rec.Status := Rec.Status::"Ready for Review";
+                    isEditable := true;
+                    CurrPage.Update();
+                end;
+            }
         }
     }    
+    trigger OnAfterGetRecord()
+    begin
+        if Rec.Status = Rec.Status::Certified then
+            isEditable := false
+        else
+            isEditable := true;
+
+    end;
+    trigger OnInit()
+    begin
+        isEditable := true;
+    end;
+    var
+        isEditable: Boolean;
 }

@@ -18,4 +18,11 @@ tableextension 55016 "Item Ledger Entry Ext" extends "Item Ledger Entry"
             DataClassification = ToBeClassified;
         }
     }
+    keys
+    {
+        key(QCKey; "QC Required","QC Compliance","QC Non Compliance")
+        {
+            
+        }
+    }
 }

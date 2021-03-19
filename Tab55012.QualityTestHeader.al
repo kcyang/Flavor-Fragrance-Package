@@ -88,7 +88,30 @@ table 55012 "Quality Test Header"
         {
             CaptionML = ENU='Lot./Serial No.',KOR='Lot./Serial No.';
             DataClassification = CustomerContent;
-            TableRelation = "Item Ledger Entry"."Lot No." where("QC Required" = const(true));
+            //TableRelation = "Item Ledger Entry"."Lot No." where("QC Required" = const(true));
+            trigger OnLookup()
+            var
+                ItemLedger: Record "Item Ledger Entry";
+                ItemLedgerLot: Page "Item Ledger LotSerial List";
+            begin
+                ItemLedger.Reset();
+                ItemLedger.SetCurrentKey("QC Required","QC Compliance","QC Non Compliance");
+                ItemLedger.SetRange("QC Required",true);
+                ItemLedger.SetRange("QC Compliance",0);
+                ItemLedger.SetFilter("Item No.","Item No.");
+                ItemLedgerLot.SetRecord(ItemLedger);
+                ItemLedgerLot.SetTableView(ItemLedger);
+                ItemLedgerLot.LookupMode(true);
+                if ItemLedgerLot.RunModal() = Action::LookupOK then 
+                begin
+                    ItemLedgerLot.GetRecord(ItemLedger);
+                    "Lot_Serial No." := ItemLedger."Lot No.";
+                    "Test Item Ledger Entry No." := ItemLedger."Entry No.";
+                    Modify();
+                end else begin
+
+                end;
+            end;
         }
         field(10; "Creation Date"; Date)
         {
@@ -108,6 +131,11 @@ table 55012 "Quality Test Header"
         field(13; "Test Start Time"; Time)
         {
             CaptionML = ENU='Test Start Time',KOR='테스트 시작시간';
+            DataClassification = CustomerContent;
+        }
+        field(14; "Test Item Ledger Entry No.";Integer)
+        {
+            CaptionML = ENU='Test Item Ledger Entry No.',KOR='테스트 품목원장번호';
             DataClassification = CustomerContent;
         }
     }
