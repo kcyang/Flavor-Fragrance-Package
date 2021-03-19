@@ -214,6 +214,28 @@ page 55028 "Quality Test"
                 end;
             }
         }
+        area(Reporting)
+        {
+            action(TestWorkSheet)
+            {
+                ApplicationArea = All;
+                CaptionML = ENU = 'Testing Worksheet', KOR = '테스트 작업시트';
+                Image = Questionnaire;
+                Promoted = true;
+                PromotedCategory = Report;
+                ToolTip = '해당 테스트문서에 대해서 QC 작업을 진행할 작업시트를 출력합니다.';
+                trigger OnAction()
+                var
+                    QCTest: Record "Quality Test Header";
+                    TestWorkSheetRpt: Report "Quality Test Worksheet";
+                begin
+                    QCTest.Reset();
+                    QCTest.SetRange("No.",Rec."No.");
+                    TestWorkSheetRpt.SetTableView(QCTest);
+                    TestWorkSheetRpt.RunModal();
+                end;
+            }
+        }        
     }    
     trigger OnAfterGetRecord()
     begin
