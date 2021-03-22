@@ -153,7 +153,16 @@ table 55013 "Quality Test Line"
         field(18; "Condition Results"; Text[250])
         {
             CaptionML = ENU='Condition Results',KOR='결과(조건)';
-            DataClassification = CustomerContent;            
+            DataClassification = CustomerContent;          
+            trigger OnValidate()
+            begin
+                if xRec."Condition Results" <> Rec."Condition Results" then
+                begin
+                    Rec."Test Completion" := true;
+                    Rec."Test Date" := Today;
+                    Modify();
+                end;
+            end;              
         }
     }
     keys

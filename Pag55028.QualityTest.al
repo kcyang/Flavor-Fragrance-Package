@@ -123,6 +123,7 @@ page 55028 "Quality Test"
                                 QTestLine.Insert();
                                 QTestLine.Validate("Quality Measure",QCSpecLine."Quality Measure");
                                 QTestLine.Validate("Quality Method",QCSpecLine."Quality Method");
+                                QTestLine."Result Type" := QCSpecLine."Result Type";
                                 QTestLine.Conditions := QCSpecLine.Conditions;
                                 QTestLine."Lower Limit" := QCSpecLine."Lower Limit";
                                 QTestLine."Upper Limit" := QCSpecLine."Upper Limit";
@@ -235,6 +236,27 @@ page 55028 "Quality Test"
                     TestWorkSheetRpt.RunModal();
                 end;
             }
+            action(Certificate)
+            {
+                ApplicationArea = All;
+                CaptionML = ENU = 'Certificate of Analysis', KOR = 'Certificate of Analysis';
+                Image = Certificate;
+                Promoted = true;
+                PromotedCategory = Report;
+                ToolTip = '검사결과를 출력합니다.';
+                trigger OnAction()
+                var
+                    QCTest: Record "Quality Test Header";
+                    TestWorkSheetRpt: Report "Certificate of analysis";
+                begin
+                    if Rec.Status <> Rec.Status::Certified then
+                        Error('테스트가 완료(Certified)되어야 출력하실 수 있습니다.');
+                    QCTest.Reset();
+                    QCTest.SetRange("No.",Rec."No.");
+                    TestWorkSheetRpt.SetTableView(QCTest);
+                    TestWorkSheetRpt.RunModal();
+                end;
+            }            
         }        
     }    
     trigger OnAfterGetRecord()

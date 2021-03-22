@@ -47,6 +47,8 @@ report 55003 "Quality Test Worksheet"
                 column(Lower_Limit;"Lower Limit"){}
                 column(Upper_Limit;"Upper Limit"){}
                 column(Nominal_Value;"Nominal Value"){}
+                column(Conditions;Conditions){}
+                column(Condition_Results;"Condition Results"){}
             }            
         }
     }
