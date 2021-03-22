@@ -150,6 +150,11 @@ table 55013 "Quality Test Line"
             CaptionML = ENU='Test Date',KOR='테스트 일자';
             DataClassification = CustomerContent;
         }
+        field(18; "Condition Results"; Text[250])
+        {
+            CaptionML = ENU='Condition Results',KOR='결과(조건)';
+            DataClassification = CustomerContent;            
+        }
     }
     keys
     {

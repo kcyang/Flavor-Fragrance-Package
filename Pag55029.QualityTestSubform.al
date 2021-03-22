@@ -77,6 +77,12 @@ page 55029 "Quality Test Subform"
                     StyleExpr = true;
                     Style = StrongAccent;                    
                 }
+                field("Condition Results";Rec."Condition Results")
+                {
+                    ApplicationArea = All;
+                    StyleExpr = true;
+                    Style = StrongAccent;                    
+                }
                 field("Non Compliance"; Rec."Non Compliance")
                 {
                     Editable = false;

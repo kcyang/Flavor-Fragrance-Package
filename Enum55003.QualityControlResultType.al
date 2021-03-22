@@ -13,5 +13,9 @@ enum 55003 "Quality Control Result Type"
     {
         Caption = 'Option';
     }
+    value(2; Condition)
+    {
+        Caption = 'Condition';
+    }
     
 }
