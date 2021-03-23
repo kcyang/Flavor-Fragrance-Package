@@ -6,6 +6,7 @@ tableextension 55008 "Production BOM Header Ext." extends "Production BOM Header
         {
             CaptionML = ENU='Item Category Code',KOR='품목 카테고리 코드';
             DataClassification = CustomerContent;
+            TableRelation = "Item Category".Code;
         }
         field(55001; "Total Maxing Ratio"; Decimal)
         {
@@ -136,6 +137,18 @@ tableextension 55008 "Production BOM Header Ext." extends "Production BOM Header
         {
             CaptionML = ENU='Color_POS',KOR='Color_POS';
             DataClassification = CustomerContent;
+        }
+        field(55030;"Line Total Maxing Ratio";Decimal)
+        {
+            CaptionML = ENU='Total Maxing Ratio',KOR='배합비율 라인합';
+            FieldClass = FlowField;
+            CalcFormula = Sum("Production BOM Line"."Maxing Ratio" WHERE ("Production BOM No."=FIELD("No."),"Version Code"=FILTER('')));
+        }
+        field(55031;"Line Total Qty";Decimal)
+        {
+            CaptionML = ENU='Line Total Qty',KOR='라인 수량합';
+            FieldClass = FlowField;
+            CalcFormula = Sum("Production BOM Line".Quantity WHERE ("Production BOM No."=FIELD("No."),"Version Code"=FILTER('')));
         }
     }
 }
