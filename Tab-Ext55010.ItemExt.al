@@ -82,5 +82,17 @@ tableextension 55010 "Item Ext." extends Item
             CaptionML = ENU='Quality Specifications',KOR='QC사양보유';
             DataClassification = ToBeClassified;
         }
+        field(55900; Usage;Integer)
+        {
+            CaptionML= ENU='Usage Count',KOR='사용횟수';
+            FieldClass = FlowField;
+            CalcFormula = Count("Item Ledger Entry" WHERE ("Item No."=FIELD("No."),"Entry Type"=CONST(Consumption)));
+        }
+        field(55901; "Usage Qty.";Decimal)
+        {
+            CaptionML = ENU='Usage Qty.',KOR='사용량';
+            FieldClass = FlowField;
+            CalcFormula = Sum("Item Ledger Entry".Quantity WHERE ("Item No."=FIELD("No."),"Entry Type"=CONST(Consumption)));
+        }
     }
 }
