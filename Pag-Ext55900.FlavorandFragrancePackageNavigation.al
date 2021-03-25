@@ -42,6 +42,17 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
                         ToolTip = '샘플주문에서 전기처리된 출고서를 확인할 수 있습니다.';
                     }
                 }
+                group(Sales)
+                {
+                    CaptionML = ENU='Sales',KOR='🏬 매출';
+                    action(SalesStatus)
+                    {
+                        CaptionML = ENU = 'Sales Order Status', KOR = '📖 매출주문 현황';
+                        RunObject = page "Sales Order Status";
+                        ApplicationArea = All;
+                        ToolTip = '매출 목록을 확인하고 관리할 수 있습니다.';
+                    }
+                }
                 group(Purchase)
                 {
                     CaptionML = ENU = 'Purchase', KOR='📦 구매';
