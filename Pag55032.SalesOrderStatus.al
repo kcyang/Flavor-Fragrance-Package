@@ -6,6 +6,7 @@ page 55032 "Sales Order Status"
     PageType = List;
     SourceTable = "Sales Line";
     UsageCategory = Lists;
+    PromotedActionCategories = 'New,Process,Report';
     SourceTableView = SORTING("Document Type","Document No.","Line No.") ORDER(Ascending) WHERE(Type=CONST(Item),"Completely Shipped"=CONST(false),"Document Type"=CONST(Order));
 
     
@@ -111,6 +112,7 @@ page 55032 "Sales Order Status"
                 {
                     ApplicationArea = All;
                 }
+                
             }
         }
     }
@@ -127,6 +129,16 @@ page 55032 "Sales Order Status"
                 Image = ViewOrder;
                 RunObject = page "Sales Order";
                 RunPageLink = "No." = field("Document No.");
+            }
+            action(LineSimulation)
+            {
+                ApplicationArea = All;
+                CaptionML = ENU='Simulation',KOR='Simulation';
+                Promoted = true;
+                PromotedIsBig = true;
+                Image = BOMLedger;
+                RunObject = page "Sales Line Simulation ";
+                RunPageLink = "Document Type"=FIELD("Document Type"),"Document No."=FIELD("Document No."),"Line No."=FIELD("Line No.");
             }
         }
     }
