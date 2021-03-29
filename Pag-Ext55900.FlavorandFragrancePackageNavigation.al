@@ -117,9 +117,27 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
                     }
 
                 }
-                group(Session)
+                group(ReportG)
                 {
-                    Caption = '🚑 Session Manage';
+                    CaptionML = ENU='📊 Reports',KOR='📊 보고서';
+                    action(StateofCOGManuf)
+                    {
+                        CaptionML = ENU='COG Manuf.',KOR='제조원가명세(원재료)';
+                        RunObject = report "Statement of COG Manuf.";
+                        ApplicationArea = All;
+                        ToolTipML = KOR='원재료에 대한 제조원가명세입니다.';
+                    }
+                }
+                group(Admin)
+                {
+                    CaptionML = ENU='🚑 Admin',KOR='🚑 관리';
+                    action(defaultsetup)
+                    {
+                        CaptionML = ENU='🎲Default Setup',KOR='🎲 기본설정';
+                        RunObject = page "FF Setup";
+                        ApplicationArea = All;
+                        ToolTip = 'FF 패키지와 연관된 기본 설정들을 관리합니다.';
+                    }
                     action("ActiveSession")
                     {
                         CaptionML = ENU = 'Active Session', KOR = '살아있는 세션';
