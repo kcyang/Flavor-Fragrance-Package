@@ -8,4 +8,8 @@ tableextension 55002 "Sales Invoice Header Ext." extends "Sales Invoice Header"
             DataClassification = CustomerContent;
         }
     }
+    keys
+    {
+        key(samplekey; isRelatedSample){}
+    }
 }

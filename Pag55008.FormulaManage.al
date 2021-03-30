@@ -204,8 +204,18 @@ page 55008 "Formula Manage"
                 ApplicationArea = All;
                 Image = PostedTaxInvoice;
                 trigger OnAction()
+                var 
+                    SalesInvoiceLine: Record "Sales Invoice Line";
+                    PostedInvoices: Page "Psted Sales Invoice Lines";
                 begin
-                    Message('🚽기능 업데이트 중입니다!🚬');
+                    SalesInvoiceLine.Reset();
+                    SalesInvoiceLine.CalcFields(isSample);
+                    SalesInvoiceLine.FilterGroup(2);
+                    SalesInvoiceLine.SetFilter(isSample,'%1',false);
+                    SalesInvoiceLine.SetFilter("No.",'%1',"No.");
+                    SalesInvoiceLine.FilterGroup(0);
+                    PostedInvoices.SetTableView(SalesInvoiceLine);
+                    PostedInvoices.Run();
                 end;
             }
             action(PostedSampleInvoice)
@@ -214,8 +224,19 @@ page 55008 "Formula Manage"
                 ApplicationArea = All;
                 Image = PostedInventoryPick;
                 trigger OnAction()
+                var
+                    SalesInvoiceLine: Record "Sales Invoice Line";
+                    PostedSampleInvoice: Page "Psted Sales Invoice Lines";
                 begin
-                    Message('🚽기능 업데이트 중입니다!🚬');
+                    //Message('🚽기능 업데이트 중입니다!🚬');
+                    SalesInvoiceLine.Reset();
+                    SalesInvoiceLine.CalcFields(isSample);
+                    SalesInvoiceLine.FilterGroup(2);
+                    SalesInvoiceLine.SetFilter(isSample,'%1',true);
+                    SalesInvoiceLine.SetFilter("No.",'%1',"No.");
+                    SalesInvoiceLine.FilterGroup(0);
+                    PostedSampleInvoice.SetTableView(SalesInvoiceLine);
+                    PostedSampleInvoice.Run();
                 end;
             }
         }
