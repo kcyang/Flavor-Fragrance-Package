@@ -17,9 +17,16 @@ page 55035 "FF Setup"
                 field("Raw Material Inv Posting Grp"; Rec."Raw Material Inv Posting Grp")
                 {
                     ApplicationArea = All;
-
+                }
+                field("Production Inv Posting Grp";"Production Inv Posting Grp")
+                {
+                    ApplicationArea = All;
                 }
                 field("Gen.Bus.Posting Group Etc";"Gen.Bus.Posting Group Etc")
+                {
+                    ApplicationArea = All;
+                }
+                field(SimulationRates;SimulationRates)
                 {
                     ApplicationArea = All;
                 }
