@@ -150,7 +150,7 @@ page 55008 "Formula Manage"
                 Image = LinesFromTimesheet;
                 trigger OnAction()
                 begin
-                    Message('🚽기능 업데이트 중입니다!🚬');
+                    Message('🚽기능 업데이트 중입니다!🚬\ 연동시스템에 맞추어 개발됩니다.');
                 end;
             }
             action(DangerUpdate)
@@ -160,7 +160,7 @@ page 55008 "Formula Manage"
                 Image = Warning;
                 trigger OnAction()
                 begin
-                    Message('🚽기능 업데이트 중입니다!🚬');
+                    Message('🚽기능 업데이트 중입니다!🚬\ 연동시스템에 맞추어 개발됩니다.');
                 end;
             }
             action(BOM)
@@ -248,12 +248,20 @@ page 55008 "Formula Manage"
                 ApplicationArea = All;
                 Image = Cost;
                 trigger OnAction()
+                var
+                    ProductionBOM: Record "Production BOM Header";
+                    SimulationRpt: Report "Current Price";
                 begin
-                    Message('🚽기능 업데이트 중입니다!🚬');
+                    //Message('🚽기능 업데이트 중입니다!🚬');
+                    ProductionBOM.Reset();
+                    ProductionBOM.SetRange("No.","No.");
+                    SimulationRpt.SetTableView(ProductionBOM);
+                    SimulationRpt.RunModal();
                 end;
             }
             action(ForwardCost)
             {
+                Visible = false;
                 CaptionML = ENU='Forward Cost',KOR='Forward Cost';
                 ApplicationArea = All;
                 Image = CostBudget;
