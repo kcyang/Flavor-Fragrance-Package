@@ -64,6 +64,16 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
                         ToolTip = 'B/L 목록을 확인하고 관리할 수 있습니다.';
                     }
                 }
+                group(Warehouse)
+                {
+                    CaptionML = ENU='🏬 Warehouse',KOR='🏬 창고';
+                    action(warehouseReceipt)
+                    {
+                        CaptionML = ENU='Warehouse Receipt Lines',KOR='창고입고목록';
+                        RunObject = page "Warehouse Receipt Lines";
+                        ApplicationArea = All;
+                    }
+                }
                 group(MasterManage)
                 {
                     CaptionML = ENU = 'Master Management', KOR = '🏗 마스터 관리';
