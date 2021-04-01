@@ -73,6 +73,12 @@ pageextension 55900 "Flavor_Fragrance Navigation" extends "Order Processor Role 
                         RunObject = page "Warehouse Receipt Lines";
                         ApplicationArea = All;
                     }
+                    action(warehouseShipment)
+                    {
+                        CaptionML = ENU='Warehouse Shipment Lines',KOR='창고출고목록';
+                        RunObject = page "Warehouse Shipment Lines";
+                        ApplicationArea = All;
+                    }                    
                 }
                 group(MasterManage)
                 {
