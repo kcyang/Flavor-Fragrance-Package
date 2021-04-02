@@ -127,7 +127,7 @@ page 55037 "Warehouse Receipt Lines"
         {
             action(PostReceipt)
             {
-                CaptionML = ENU='Post Receipt',KOR='출고 전기';
+                CaptionML = ENU='Post Receipt',KOR='입고 전기';
                 Image = PostedReceipt;
                 Promoted = true;
                 PromotedIsBig = true;
