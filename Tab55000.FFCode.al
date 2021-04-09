@@ -20,6 +20,11 @@ table 55000 "FF Code"
             CaptionML = ENU='Description',KOR='설명';
             DataClassification = CustomerContent;
         }
+        field(4; Image; Media)
+        {
+            Caption = 'Image';
+            DataClassification = CustomerContent;            
+        }
     }
     keys
     {

@@ -13,5 +13,12 @@ enum 55000 "FF Code Type"
     {
         Caption = 'Direction';
     }
-    
+    value(2; "GHS Pics")
+    {
+        Caption = 'GHS Pics';
+    }
+    value(3; "MSDS Pics")
+    {
+        Caption = 'MSDS Pics';
+    }
 }
