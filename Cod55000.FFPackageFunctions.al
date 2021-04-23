@@ -166,7 +166,7 @@ codeunit 55000 "FF Package Functions"
     [EventSubscriber(ObjectType::Table, Database::"Sales Line", 'OnBeforeValidateBlanketOrderLineNo', '', false, false)]
     local procedure OnBeforeValidateBlanketOrderLineNo(var IsHandled: Boolean)
     begin
-        IsHandled := true;
+        IsHandled := true;//fdsafdsafdsaf
     end;
     //샘플요청서의 경우, 관련 주문서가 처리될 때, Blanket 으로 처리하되, Sample 관련문서로 처리되도록 이벤트를 선처리후,
     //샘플의 경우, 처리되면, 이후 Blanket 관련 프로세스는 건너뛰도록 isHandled -> True 처리함.
